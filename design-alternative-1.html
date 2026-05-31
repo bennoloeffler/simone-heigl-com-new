@@ -154,18 +154,27 @@
       </h1>
     </div>
 
-    <!-- right column: standfirst + initials seal -->
+    <!-- right column: portrait + standfirst -->
     <div class="col-span-12 lg:col-span-3 lg:pb-3 flex flex-col gap-8">
-      <div class="relative w-28 h-28">
-        <div class="absolute inset-0 rounded-full border rule"></div>
-        <div class="absolute inset-0 flex items-center justify-center font-display italic text-3xl text-ink">SH</div>
-        <svg viewBox="0 0 100 100" class="absolute inset-0 animate-[spin_22s_linear_infinite]" aria-hidden="true">
-          <defs><path id="cp" d="M50,50 m-37,0 a37,37 0 1,1 74,0 a37,37 0 1,1 -74,0"/></defs>
-          <text class="fill-taupe" style="font-size:8.4px; letter-spacing:3.1px; font-family:Inter, sans-serif;">
-            <textPath href="#cp">TRAINERIN · BERATERIN · COACH · </textPath>
-          </text>
-        </svg>
-      </div>
+      <!-- Portrait with fine taupe frame + rotating seal badge -->
+      <figure class="relative max-w-[300px] mx-auto lg:mx-0 w-full">
+        <div class="relative border rule p-2 bg-paper">
+          <img src="assets/simone-hero.jpg"
+               alt="Simone Heigl — Trainerin, Beraterin und Coach"
+               class="w-full aspect-[549/700] object-cover object-top"
+               width="549" height="700" loading="lazy" />
+        </div>
+        <!-- rotating seal, overlapping bottom-left corner -->
+        <div class="absolute -bottom-6 -left-6 w-24 h-24 rounded-full bg-paper border rule flex items-center justify-center">
+          <span class="font-display italic text-2xl text-ink">SH</span>
+          <svg viewBox="0 0 100 100" class="absolute inset-0 animate-[spin_22s_linear_infinite]" aria-hidden="true">
+            <defs><path id="cp" d="M50,50 m-37,0 a37,37 0 1,1 74,0 a37,37 0 1,1 -74,0"/></defs>
+            <text class="fill-taupe" style="font-size:8.4px; letter-spacing:3.1px; font-family:Inter, sans-serif;">
+              <textPath href="#cp">TRAINERIN · BERATERIN · COACH · </textPath>
+            </text>
+          </svg>
+        </div>
+      </figure>
       <p class="text-[15px] leading-relaxed text-ink/70 border-l-2 border-taupe pl-4">
         Veränderung und Kommunikation — kompetent begleitet. Klarheit für Menschen und Organisationen, die weiterwollen.
       </p>

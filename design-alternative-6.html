@@ -92,6 +92,10 @@
   /* sticky progress bar */
   .scrollbar { position:fixed; top:0; left:0; height:3px; background:var(--taupe); z-index:60; width:0; }
 
+  /* hero portrait gentle float */
+  .hero-portrait img { animation:heroFloat 7s ease-in-out infinite; }
+  @keyframes heroFloat { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-14px)} }
+
   /* seminar number */
   .sem-num { font-variant-numeric:tabular-nums; }
 
@@ -100,6 +104,7 @@
     .reveal{opacity:1;transform:none;transition:none}
     .hero-word{opacity:1;transform:none;animation:none}
     .marquee{animation:none}
+    .hero-portrait img{animation:none}
   }
 </style>
 </head>
@@ -186,7 +191,8 @@
       </a>
     </div>
 
-    <div class="relative z-10 max-w-7xl mx-auto px-5 sm:px-8 w-full">
+    <div class="relative z-10 max-w-7xl mx-auto px-5 sm:px-8 w-full grid lg:grid-cols-12 gap-10 lg:gap-12 items-center">
+      <div class="lg:col-span-7">
       <div class="inline-flex items-center gap-2 rounded-full border border-sand-3 bg-white/60 px-4 py-1.5 mb-8 reveal"
            x-intersect.once="$el.classList.add('shown')">
         <span class="w-2 h-2 rounded-full bg-taupe animate-pulse"></span>
@@ -225,6 +231,19 @@
              @mouseenter="cursorHover=true" @mouseleave="cursorHover=false">
             Leistungen ansehen
           </a>
+        </div>
+      </div>
+      </div>
+
+      <!-- prominent portrait -->
+      <div class="lg:col-span-5 reveal reveal-d2 hero-portrait"
+           x-intersect.once="$el.classList.add('shown')">
+        <div class="relative mx-auto max-w-sm lg:max-w-none">
+          <span class="absolute -inset-4 rounded-[2rem] bg-taupe/10 blur-2xl" aria-hidden="true"></span>
+          <img src="assets/simone-face.jpg"
+               alt="Simone Heigl — Trainerin, Beraterin und Coach"
+               loading="eager"
+               class="relative w-full h-[clamp(20rem,46vw,34rem)] object-cover object-top rounded-[2rem] shadow-2xl ring-1 ring-sand-3/60">
         </div>
       </div>
     </div>

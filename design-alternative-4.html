@@ -109,6 +109,25 @@ tailwind.config = {
 
   .num-line{ font-family:'Fraunces',serif; font-variant-numeric:tabular-nums; }
 
+  /* hero portrait — taupe glow + fade into black */
+  .hero-portrait{
+    position:relative; border-radius:1.75rem; overflow:hidden;
+  }
+  .hero-portrait::before{
+    content:""; position:absolute; inset:-18% -12% -6% -8%; z-index:-1; border-radius:50%;
+    background:radial-gradient(closest-side, rgba(169,156,133,.40), rgba(169,156,133,0) 72%);
+    filter:blur(38px);
+  }
+  .hero-portrait img{
+    width:100%; height:100%; object-fit:cover; object-position:50% 18%;
+    -webkit-mask-image:radial-gradient(125% 115% at 60% 38%, #000 52%, rgba(0,0,0,.35) 78%, transparent 100%);
+            mask-image:radial-gradient(125% 115% at 60% 38%, #000 52%, rgba(0,0,0,.35) 78%, transparent 100%);
+  }
+  .hero-portrait::after{
+    content:""; position:absolute; inset:0; pointer-events:none;
+    background:linear-gradient(180deg, rgba(11,10,8,0) 55%, rgba(11,10,8,.85) 100%);
+  }
+
   /* seminar accordion */
   details[open] .chev{ transform:rotate(45deg); }
 
@@ -174,7 +193,8 @@ tailwind.config = {
     </div>
   </div>
 
-  <div class="max-w-7xl mx-auto px-6 lg:px-10 w-full">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10 w-full grid lg:grid-cols-[1fr_minmax(320px,38%)] gap-12 lg:gap-16 items-center">
+    <div>
     <div class="reveal">
       <p class="inline-flex items-center gap-3 text-xs uppercase tracking-[0.4em] text-taupe/80 mb-8">
         <span class="w-10 h-px bg-taupe/50"></span> Kommunikation &amp; Persönlichkeitsentwicklung
@@ -200,6 +220,14 @@ tailwind.config = {
         <a href="#broschuere" class="inline-flex items-center gap-3 rounded-full border hairline px-7 py-4 text-sand hover:border-taupe hover:text-taupe transition-colors">
           Broschüre laden
         </a>
+      </div>
+    </div>
+    </div>
+
+    <!-- Portrait Simone Heigl -->
+    <div class="reveal order-first lg:order-none mx-auto w-full max-w-xs sm:max-w-sm lg:max-w-none">
+      <div class="hero-portrait aspect-[3/4]">
+        <img src="assets/simone-duotone.jpg" alt="Simone Heigl — Trainerin, Beraterin und Coach" loading="eager" decoding="async">
       </div>
     </div>
   </div>

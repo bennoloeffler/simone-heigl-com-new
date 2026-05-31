@@ -93,6 +93,8 @@
     }
     .glass-edge:hover::after { left: 130%; }
 
+    .portrait-frame { box-shadow: inset 0 0 0 1px rgba(255,255,255,0.4), inset 0 -60px 80px -40px rgba(40,35,28,0.55); }
+
     .display { font-family: 'Fraunces', serif; }
     .reveal { opacity: 0; transform: translateY(26px); transition: opacity .8s cubic-bezier(.2,.7,.2,1), transform .8s cubic-bezier(.2,.7,.2,1); }
     .reveal.in { opacity: 1; transform: none; }
@@ -182,12 +184,18 @@
 
       <!-- side stack -->
       <div class="lg:col-span-4 flex flex-col gap-6">
-        <div class="glass-soft rounded-[2rem] p-7 flex-1 reveal lift" style="transition-delay:.1s">
-          <span class="display text-5xl font-semibold text-taupe2">SH</span>
-          <p class="mt-4 text-ink/70 text-sm leading-relaxed">
-            Kommunikation, Selbstmanagement, Fuehrung und Resilienz — massgeschneidert,
-            praxisnah, mit Respekt und Vertrauen.
-          </p>
+        <div class="glass-soft rounded-[2rem] p-2 flex-1 reveal lift portrait-card" style="transition-delay:.1s">
+          <div class="portrait-frame rounded-[1.6rem] overflow-hidden relative h-full min-h-[260px]">
+            <img src="assets/simone-hero.jpg" alt="Simone Heigl — Trainerin, Beraterin und Coach"
+                 class="absolute inset-0 w-full h-full object-cover object-top" loading="lazy" />
+            <div class="glass-soft absolute inset-x-3 bottom-3 rounded-[1.2rem] px-5 py-4">
+              <p class="display text-lg font-semibold text-ink leading-tight">Simone Heigl</p>
+              <p class="mt-1 text-ink/70 text-xs leading-relaxed">
+                Kommunikation, Selbstmanagement, Fuehrung und Resilienz — massgeschneidert,
+                praxisnah, mit Respekt und Vertrauen.
+              </p>
+            </div>
+          </div>
         </div>
         <div class="glass rounded-[2rem] p-7 reveal lift" style="transition-delay:.2s">
           <ul class="space-y-3 text-sm text-ink/80">
