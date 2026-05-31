@@ -1,0 +1,542 @@
+<!doctype html>
+<html lang="de" class="scroll-smooth">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Simone Heigl — Trainerin, Beraterin &amp; Coach</title>
+<meta name="description" content="Innere Stärke aufbauen. Ziele und Wünsche klären. Veränderung kompetent meistern. Simone Heigl — Trainerin, Beraterin & Coach." />
+
+<!-- Tailwind Play CDN -->
+<script src="https://cdn.tailwindcss.com"></script>
+
+<!-- Alpine.js -->
+<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+<!-- Google Fonts: editorial serif display + grotesk text -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          taupe:   '#A99C85',
+          ink:     '#111111',
+          paper:   '#FFFFFF',
+          sand0:   '#F4F0E9',
+          sand1:   '#EAE3D6',
+          sand2:   '#D8CDB8',
+        },
+        fontFamily: {
+          display: ['Fraunces', 'Georgia', 'serif'],
+          sans:    ['Inter', 'system-ui', 'sans-serif'],
+        },
+      }
+    }
+  }
+</script>
+
+<style>
+  :root { --taupe:#A99C85; --ink:#111111; }
+  html { -webkit-font-smoothing: antialiased; }
+  body { background:#fff; color:#111; }
+
+  /* Fine editorial rule */
+  .rule { border-color: #D8CDB8; }
+
+  /* Display kerning for big serif */
+  .display-tight { letter-spacing: -0.02em; line-height: 0.95; }
+
+  /* Drop-cap for the editorial intro */
+  .dropcap::first-letter {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    float: left;
+    font-size: 4.6rem;
+    line-height: 0.72;
+    padding: 0.30rem 0.7rem 0 0;
+    color: var(--taupe);
+    font-style: italic;
+  }
+
+  /* Reveal on scroll */
+  .reveal { opacity:0; transform: translateY(26px); transition: opacity 1s cubic-bezier(.2,.7,.2,1), transform 1s cubic-bezier(.2,.7,.2,1); }
+  .reveal.in { opacity:1; transform:none; }
+
+  /* Marquee */
+  @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+  .marquee-track { display:inline-flex; white-space:nowrap; animation: marquee 32s linear infinite; }
+  .marquee-wrap:hover .marquee-track { animation-play-state: paused; }
+
+  /* Animated hairline underline for nav */
+  .navlink { position:relative; }
+  .navlink::after {
+    content:''; position:absolute; left:0; bottom:-3px; height:1px; width:100%;
+    background: var(--ink); transform: scaleX(0); transform-origin: right; transition: transform .45s cubic-bezier(.2,.7,.2,1);
+  }
+  .navlink:hover::after { transform: scaleX(1); transform-origin:left; }
+
+  /* Seminar row hover: title slides, number fades up */
+  .sem-row .sem-title { transition: transform .5s cubic-bezier(.2,.7,.2,1), color .4s; }
+  .sem-row:hover .sem-title { transform: translateX(18px); color: var(--taupe); }
+  .sem-row .sem-arrow { opacity:0; transform: translateX(-12px); transition: all .5s cubic-bezier(.2,.7,.2,1); }
+  .sem-row:hover .sem-arrow { opacity:1; transform: none; }
+  .sem-row .sem-excerpt { max-height:0; overflow:hidden; opacity:0; transition: max-height .6s ease, opacity .5s ease, margin .5s ease; }
+  .sem-row:hover .sem-excerpt, .sem-row:focus-within .sem-excerpt { max-height:160px; opacity:1; }
+
+  /* Custom dot cursor follower (desktop) */
+  #dot { position:fixed; top:0; left:0; width:9px; height:9px; border-radius:50%; background:var(--taupe); pointer-events:none; z-index:90; transform: translate(-50%,-50%); transition: width .25s, height .25s, background .25s; mix-blend-mode: multiply; }
+  #dot.big { width:46px; height:46px; background:rgba(169,156,133,.22); }
+  @media (hover:none){ #dot{ display:none; } }
+
+  ::selection { background: #EAE3D6; color:#111; }
+
+  /* Vertical running label */
+  .vlabel { writing-mode: vertical-rl; letter-spacing:.35em; }
+</style>
+</head>
+
+<body class="font-sans antialiased text-ink selection:bg-sand1">
+
+<div id="dot"></div>
+
+<!-- ============ TOP NAV ============ -->
+<header class="fixed top-0 inset-x-0 z-50 bg-paper/80 backdrop-blur-md border-b rule">
+  <nav class="max-w-[1280px] mx-auto px-6 md:px-10 h-16 flex items-center justify-between">
+    <a href="#top" class="font-display text-xl tracking-tight">
+      Simone<span class="text-taupe italic"> Heigl</span>
+    </a>
+    <div class="hidden md:flex items-center gap-8 text-[13px] uppercase tracking-[.18em] text-ink/70">
+      <a href="#ueber" class="navlink hover:text-ink">Über mich</a>
+      <a href="#leistungen" class="navlink hover:text-ink">Leistungen</a>
+      <a href="#seminare" class="navlink hover:text-ink">Seminare</a>
+      <a href="#broschuere" class="navlink hover:text-ink">Broschüre</a>
+      <a href="#kontakt" class="navlink hover:text-ink">Kontakt</a>
+    </div>
+    <a href="#kontakt" class="hidden md:inline-block text-[13px] uppercase tracking-[.16em] border border-ink/80 px-4 py-2 hover:bg-ink hover:text-paper transition-colors duration-300">Gespräch</a>
+    <button class="md:hidden text-[13px] uppercase tracking-[.18em]" onclick="document.getElementById('mnav').classList.toggle('hidden')">Menü</button>
+  </nav>
+  <div id="mnav" class="hidden md:hidden border-t rule bg-paper px-6 py-4 flex flex-col gap-3 text-sm uppercase tracking-[.18em]">
+    <a href="#ueber">Über mich</a><a href="#leistungen">Leistungen</a><a href="#seminare">Seminare</a><a href="#broschuere">Broschüre</a><a href="#kontakt">Kontakt</a>
+  </div>
+</header>
+
+<a id="top"></a>
+
+<!-- ============ HERO ============ -->
+<section class="relative pt-28 md:pt-36 pb-16 md:pb-24 overflow-hidden">
+  <!-- masthead line -->
+  <div class="max-w-[1280px] mx-auto px-6 md:px-10">
+    <div class="flex items-center justify-between text-[11px] uppercase tracking-[.3em] text-ink/50 border-b rule pb-4">
+      <span>Kommunikation · Veränderung · Resilienz</span>
+      <span class="hidden sm:inline">Ausgabe № 01 — Trainerin, Beraterin &amp; Coach</span>
+    </div>
+  </div>
+
+  <div class="max-w-[1280px] mx-auto px-6 md:px-10 mt-10 md:mt-16 grid grid-cols-12 gap-y-10 md:gap-10 items-end">
+
+    <!-- left vertical label -->
+    <div class="hidden lg:flex col-span-1 self-stretch items-start">
+      <span class="vlabel text-[11px] uppercase tracking-[.3em] text-taupe">Simone Heigl — Portfolio</span>
+    </div>
+
+    <!-- Big editorial headline -->
+    <div class="col-span-12 lg:col-span-8">
+      <h1 class="font-display font-light display-tight text-[clamp(2.7rem,8vw,7rem)]">
+        Innere Stärke
+        <span class="block italic font-normal text-taupe">aufbauen.</span>
+        <span class="block">Ziele klären.</span>
+        <span class="block">Veränderung
+          <span class="italic font-normal">meistern.</span>
+        </span>
+      </h1>
+    </div>
+
+    <!-- right column: standfirst + initials seal -->
+    <div class="col-span-12 lg:col-span-3 lg:pb-3 flex flex-col gap-8">
+      <div class="relative w-28 h-28">
+        <div class="absolute inset-0 rounded-full border rule"></div>
+        <div class="absolute inset-0 flex items-center justify-center font-display italic text-3xl text-ink">SH</div>
+        <svg viewBox="0 0 100 100" class="absolute inset-0 animate-[spin_22s_linear_infinite]" aria-hidden="true">
+          <defs><path id="cp" d="M50,50 m-37,0 a37,37 0 1,1 74,0 a37,37 0 1,1 -74,0"/></defs>
+          <text class="fill-taupe" style="font-size:8.4px; letter-spacing:3.1px; font-family:Inter, sans-serif;">
+            <textPath href="#cp">TRAINERIN · BERATERIN · COACH · </textPath>
+          </text>
+        </svg>
+      </div>
+      <p class="text-[15px] leading-relaxed text-ink/70 border-l-2 border-taupe pl-4">
+        Veränderung und Kommunikation — kompetent begleitet. Klarheit für Menschen und Organisationen, die weiterwollen.
+      </p>
+    </div>
+  </div>
+
+  <!-- floating "Störer" badge -->
+  <div class="pointer-events-none">
+    <a href="#seminare" class="pointer-events-auto group fixed md:absolute right-5 md:right-10 top-[30%] md:top-auto md:bottom-12 z-40
+              flex items-center gap-2 bg-ink text-paper text-[11px] uppercase tracking-[.2em] px-4 py-3 shadow-xl
+              hover:bg-taupe transition-colors duration-300 rotate-[-3deg]">
+      <span class="inline-block w-2 h-2 rounded-full bg-taupe group-hover:bg-ink animate-pulse"></span>
+      Neu — 6 Seminarthemen
+    </a>
+  </div>
+
+  <!-- scroll hint -->
+  <div class="max-w-[1280px] mx-auto px-6 md:px-10 mt-12 md:mt-20">
+    <div class="flex items-center gap-3 text-[11px] uppercase tracking-[.3em] text-ink/40">
+      <span class="w-10 h-px bg-ink/30"></span> Scrollen
+    </div>
+  </div>
+</section>
+
+<!-- ============ MARQUEE ============ -->
+<section class="marquee-wrap border-y rule py-4 bg-sand0 overflow-hidden" aria-hidden="true">
+  <div class="marquee-track font-display text-2xl md:text-4xl italic text-ink/80">
+    <span class="px-6">Kommunikation</span><span class="px-6 text-taupe">·</span>
+    <span class="px-6">Selbstmanagement</span><span class="px-6 text-taupe">·</span>
+    <span class="px-6">Führung</span><span class="px-6 text-taupe">·</span>
+    <span class="px-6">Resilienz</span><span class="px-6 text-taupe">·</span>
+    <span class="px-6">Konfliktmanagement</span><span class="px-6 text-taupe">·</span>
+    <span class="px-6">Rhetorik</span><span class="px-6 text-taupe">·</span>
+    <!-- duplicate for seamless loop -->
+    <span class="px-6">Kommunikation</span><span class="px-6 text-taupe">·</span>
+    <span class="px-6">Selbstmanagement</span><span class="px-6 text-taupe">·</span>
+    <span class="px-6">Führung</span><span class="px-6 text-taupe">·</span>
+    <span class="px-6">Resilienz</span><span class="px-6 text-taupe">·</span>
+    <span class="px-6">Konfliktmanagement</span><span class="px-6 text-taupe">·</span>
+    <span class="px-6">Rhetorik</span><span class="px-6 text-taupe">·</span>
+  </div>
+</section>
+
+<!-- ============ ÜBER MICH ============ -->
+<section id="ueber" class="py-20 md:py-32">
+  <div class="max-w-[1280px] mx-auto px-6 md:px-10 grid grid-cols-12 gap-y-8 md:gap-10">
+    <div class="col-span-12 md:col-span-3 reveal">
+      <div class="text-[11px] uppercase tracking-[.3em] text-taupe mb-4">№ 01 — Über mich</div>
+      <div class="font-display text-5xl text-ink/15 leading-none">01</div>
+    </div>
+    <div class="col-span-12 md:col-span-9 reveal">
+      <p class="dropcap font-display font-light text-[clamp(1.5rem,3.4vw,2.6rem)] leading-[1.35] text-ink">
+        Unser Leben verlangt immer mehr Kompetenz in Veränderung und Kommunikation. Als Trainerin, Beraterin und Coach begleite ich Sie gerne in Ihre Zukunft.
+      </p>
+      <div class="mt-10 flex flex-wrap items-center gap-x-10 gap-y-4 border-t rule pt-6 text-[13px] uppercase tracking-[.18em] text-ink/60">
+        <span>Beratung</span><span class="text-taupe">/</span>
+        <span>Training</span><span class="text-taupe">/</span>
+        <span>Coaching</span><span class="text-taupe">/</span>
+        <span>Bewerbercoaching</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ LEISTUNGEN ============ -->
+<section id="leistungen" class="py-16 md:py-24 bg-sand0 border-y rule">
+  <div class="max-w-[1280px] mx-auto px-6 md:px-10">
+    <div class="flex items-end justify-between border-b rule pb-6 mb-12 reveal">
+      <h2 class="font-display font-light text-[clamp(2rem,5vw,3.6rem)] display-tight">Leistungen</h2>
+      <span class="text-[11px] uppercase tracking-[.3em] text-taupe hidden sm:block">№ 02 — Vier Wege</span>
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-px bg-sand2/60">
+      <!-- Beratung -->
+      <article class="bg-paper p-8 md:p-12 reveal group">
+        <div class="flex items-baseline gap-4 mb-5">
+          <span class="font-display italic text-taupe text-3xl">a.</span>
+          <h3 class="font-display text-2xl md:text-3xl">Beratung</h3>
+        </div>
+        <p class="text-ink/80 leading-relaxed mb-4">Bei einer Kommunikationsberatung handelt es sich um eine auf die Kommunikation fokussierte Unternehmensberatung.</p>
+        <p class="text-[14px] text-ink/55 leading-relaxed">Optimierung von Kommunikationsprozessen, Konfliktmanagement, Einführung von Mitarbeitergesprächen.</p>
+      </article>
+      <!-- Training -->
+      <article class="bg-paper p-8 md:p-12 reveal group">
+        <div class="flex items-baseline gap-4 mb-5">
+          <span class="font-display italic text-taupe text-3xl">b.</span>
+          <h3 class="font-display text-2xl md:text-3xl">Training</h3>
+        </div>
+        <p class="text-ink/80 leading-relaxed mb-4">Als freiberufliche Trainerin biete ich flexible und maßgeschneiderte Seminare im Bereich Kommunikation, Selbstmanagement, Führung und Resilienz an.</p>
+        <p class="text-[14px] text-ink/55 leading-relaxed">…positive Lernatmosphäre… gegenseitiges Vertrauen, Respekt und Akzeptanz.</p>
+      </article>
+      <!-- Coaching -->
+      <article class="bg-paper p-8 md:p-12 reveal group">
+        <div class="flex items-baseline gap-4 mb-5">
+          <span class="font-display italic text-taupe text-3xl">c.</span>
+          <h3 class="font-display text-2xl md:text-3xl">Coaching</h3>
+        </div>
+        <p class="text-ink/80 leading-relaxed mb-4">Coaching ist eine der intensivsten Methoden, um persönliche Veränderungen zu erreichen.</p>
+        <p class="text-[14px] text-ink/55 leading-relaxed">Einzel- oder Teamcoaching.</p>
+      </article>
+      <!-- Bewerbercoaching -->
+      <article class="bg-paper p-8 md:p-12 reveal group">
+        <div class="flex items-baseline gap-4 mb-5">
+          <span class="font-display italic text-taupe text-3xl">d.</span>
+          <h3 class="font-display text-2xl md:text-3xl">Bewerbercoaching</h3>
+        </div>
+        <p class="text-ink/80 leading-relaxed mb-4">Unterstützung bei der Gestaltung Ihrer Bewerbungsunterlagen oder der Stellenrecherche. Vorbereitung auf ein Vorstellungsgespräch oder ein Assessmentcenter.</p>
+        <p class="text-[14px] text-ink/55 leading-relaxed italic">Ziel: Lernen Sie souverän aufzutreten und sich selber professionell zu vermarkten.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SEMINARTHEMEN ============ -->
+<section id="seminare" class="py-20 md:py-32">
+  <div class="max-w-[1280px] mx-auto px-6 md:px-10">
+    <div class="flex items-end justify-between mb-10 reveal">
+      <h2 class="font-display font-light text-[clamp(2rem,5vw,3.6rem)] display-tight">Seminar&shy;themen</h2>
+      <span class="text-[11px] uppercase tracking-[.3em] text-taupe hidden sm:block">№ 03 — Sechs Formate</span>
+    </div>
+
+    <ul class="border-t rule">
+      <!-- 1 -->
+      <li class="sem-row border-b rule reveal">
+        <a href="#broschuere" class="block py-7 md:py-9 group focus:outline-none">
+          <div class="flex items-baseline gap-5 md:gap-8">
+            <span class="font-display text-taupe text-xl md:text-2xl w-10 shrink-0">01</span>
+            <div class="flex-1">
+              <h3 class="sem-title font-display text-2xl md:text-4xl font-light">Resilienz … die eigene Widerstandskraft erhöhen
+                <span class="sem-arrow text-taupe">→</span>
+              </h3>
+              <p class="sem-excerpt text-ink/60 mt-3 max-w-2xl leading-relaxed">Seien Sie bereit für die heutigen und zukünftigen Herausforderungen, Belastungen des Alltags und im Business.</p>
+            </div>
+          </div>
+        </a>
+      </li>
+      <!-- 2 -->
+      <li class="sem-row border-b rule reveal">
+        <a href="#broschuere" class="block py-7 md:py-9 group focus:outline-none">
+          <div class="flex items-baseline gap-5 md:gap-8">
+            <span class="font-display text-taupe text-xl md:text-2xl w-10 shrink-0">02</span>
+            <div class="flex-1">
+              <h3 class="sem-title font-display text-2xl md:text-4xl font-light">Klartext reden!
+                <span class="sem-arrow text-taupe">→</span>
+              </h3>
+              <p class="sem-excerpt text-ink/60 mt-3 max-w-2xl leading-relaxed">Die Fähigkeit, effizient und wirkungsvoll zu kommunizieren, ist zu einem der wichtigsten Erfolgsfaktoren im Umgang mit Kunden geworden.</p>
+            </div>
+          </div>
+        </a>
+      </li>
+      <!-- 3 -->
+      <li class="sem-row border-b rule reveal">
+        <a href="#broschuere" class="block py-7 md:py-9 group focus:outline-none">
+          <div class="flex items-baseline gap-5 md:gap-8">
+            <span class="font-display text-taupe text-xl md:text-2xl w-10 shrink-0">03</span>
+            <div class="flex-1">
+              <h3 class="sem-title font-display text-2xl md:text-4xl font-light">Kundenbeschwerde – was nun?
+                <span class="sem-arrow text-taupe">→</span>
+              </h3>
+              <p class="sem-excerpt text-ink/60 mt-3 max-w-2xl leading-relaxed">Ein effektives Beschwerdemanagement und der professionelle Umgang mit Reklamationen bieten Ihnen eine wichtige Möglichkeit der Kundenbindung.</p>
+            </div>
+          </div>
+        </a>
+      </li>
+      <!-- 4 -->
+      <li class="sem-row border-b rule reveal">
+        <a href="#broschuere" class="block py-7 md:py-9 group focus:outline-none">
+          <div class="flex items-baseline gap-5 md:gap-8">
+            <span class="font-display text-taupe text-xl md:text-2xl w-10 shrink-0">04</span>
+            <div class="flex-1">
+              <h3 class="sem-title font-display text-2xl md:text-4xl font-light">Rhetorik … sicher und souverän vor Publikum sprechen
+                <span class="sem-arrow text-taupe">→</span>
+              </h3>
+              <p class="sem-excerpt text-ink/60 mt-3 max-w-2xl leading-relaxed">Ein erfolgreicher Auftritt vor Publikum hängt zum Großteil von Ihrer rhetorischen Ausdruckskraft ab.</p>
+            </div>
+          </div>
+        </a>
+      </li>
+      <!-- 5 -->
+      <li class="sem-row border-b rule reveal">
+        <a href="#broschuere" class="block py-7 md:py-9 group focus:outline-none">
+          <div class="flex items-baseline gap-5 md:gap-8">
+            <span class="font-display text-taupe text-xl md:text-2xl w-10 shrink-0">05</span>
+            <div class="flex-1">
+              <h3 class="sem-title font-display text-2xl md:text-4xl font-light">Konfliktmanagement
+                <span class="sem-arrow text-taupe">→</span>
+              </h3>
+              <p class="sem-excerpt text-ink/60 mt-3 max-w-2xl leading-relaxed">Wie entstehen die Konflikte und wie können wir diese konstruktiv lösen?</p>
+            </div>
+          </div>
+        </a>
+      </li>
+      <!-- 6 -->
+      <li class="sem-row border-b rule reveal">
+        <a href="#broschuere" class="block py-7 md:py-9 group focus:outline-none">
+          <div class="flex items-baseline gap-5 md:gap-8">
+            <span class="font-display text-taupe text-xl md:text-2xl w-10 shrink-0">06</span>
+            <div class="flex-1">
+              <h3 class="sem-title font-display text-2xl md:text-4xl font-light">Vom Mitarbeiter zur Führungskraft
+                <span class="sem-arrow text-taupe">→</span>
+              </h3>
+              <p class="sem-excerpt text-ink/60 mt-3 max-w-2xl leading-relaxed">Lernen Sie mit den größten Herausforderungen des Führungsalltags umzugehen und trainieren Sie Ihre Kommunikations- und Führungskompetenz.</p>
+            </div>
+          </div>
+        </a>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ ZITAT ============ -->
+<section class="py-20 md:py-32 bg-ink text-paper">
+  <div class="max-w-[1100px] mx-auto px-6 md:px-10 text-center reveal">
+    <span class="font-display text-taupe text-6xl md:text-8xl leading-none block mb-4">“</span>
+    <blockquote class="font-display font-light italic text-[clamp(1.8rem,5vw,4rem)] display-tight">
+      Of all life skills available to us, communication is probably the most powerful.
+    </blockquote>
+    <cite class="not-italic block mt-8 text-[12px] uppercase tracking-[.3em] text-taupe">— Bret Morrison</cite>
+  </div>
+</section>
+
+<!-- ============ BROSCHÜRE / LEAD CAPTURE ============ -->
+<section id="broschuere" class="py-20 md:py-28 border-b rule" x-data="{ sent:false, email:'' }">
+  <div class="max-w-[1280px] mx-auto px-6 md:px-10">
+    <div class="grid grid-cols-12 gap-y-10 md:gap-10 items-center bg-sand0 border rule p-8 md:p-14">
+
+      <div class="col-span-12 md:col-span-6">
+        <div class="text-[11px] uppercase tracking-[.3em] text-taupe mb-5">№ 04 — Broschüre als PDF</div>
+        <h2 class="font-display font-light text-[clamp(1.9rem,4.5vw,3.2rem)] display-tight">
+          Die ganze Übersicht.<br><span class="italic text-taupe">In Ihrem Postfach.</span>
+        </h2>
+        <p class="text-ink/65 mt-5 max-w-md leading-relaxed">
+          Alle Leistungen und Seminarthemen kompakt in einem eleganten PDF — tragen Sie Ihre E-Mail ein, das Dokument kommt umgehend zu Ihnen.
+        </p>
+      </div>
+
+      <div class="col-span-12 md:col-span-6">
+        <!-- Inline lead-capture (no backend, JS stub) -->
+        <form @submit.prevent="sent = true" x-show="!sent" class="relative">
+          <label for="lead-email" class="block text-[11px] uppercase tracking-[.25em] text-ink/50 mb-3">E-Mail-Adresse</label>
+          <div class="flex flex-col sm:flex-row border-b-2 border-ink/80 focus-within:border-taupe transition-colors">
+            <input id="lead-email" type="email" required x-model="email"
+                   placeholder="name@beispiel.de"
+                   class="flex-1 bg-transparent py-4 text-lg md:text-xl font-display placeholder:text-ink/30 focus:outline-none" />
+            <button type="submit"
+                    class="mt-3 sm:mt-0 sm:ml-4 inline-flex items-center justify-center gap-2 bg-ink text-paper px-6 py-4 text-[12px] uppercase tracking-[.2em] hover:bg-taupe transition-colors duration-300 whitespace-nowrap">
+              Broschüre herunterladen <span aria-hidden="true">↓</span>
+            </button>
+          </div>
+          <p class="mt-3 text-[11px] text-ink/40 tracking-wide">Demo-Formular — es werden keine Daten übertragen oder gespeichert.</p>
+        </form>
+
+        <!-- Danke-State -->
+        <div x-show="sent" x-cloak x-transition.opacity.duration.500ms class="border rule bg-paper p-7">
+          <div class="flex items-center gap-3 mb-2">
+            <span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-taupe text-paper">✓</span>
+            <span class="font-display text-2xl">Danke!</span>
+          </div>
+          <p class="text-ink/70 leading-relaxed">Die Broschüre ist unterwegs an <span class="font-medium text-taupe" x-text="email"></span>.</p>
+          <a href="#" class="inline-block mt-4 text-[12px] uppercase tracking-[.2em] border-b border-ink/60 hover:text-taupe hover:border-taupe">Broschüre direkt öffnen (PDF) ↗</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ KONTAKT / CTA ============ -->
+<section id="kontakt" class="py-24 md:py-36">
+  <div class="max-w-[1280px] mx-auto px-6 md:px-10 grid grid-cols-12 gap-y-12 md:gap-10 items-end">
+    <div class="col-span-12 md:col-span-8 reveal">
+      <div class="text-[11px] uppercase tracking-[.3em] text-taupe mb-6">№ 05 — Kontakt</div>
+      <h2 class="font-display font-light display-tight text-[clamp(2.4rem,7vw,6rem)]">
+        Ich freue mich auf ein <span class="italic text-taupe">persönliches</span> Gespräch.
+      </h2>
+    </div>
+    <div class="col-span-12 md:col-span-4 reveal">
+      <div class="text-[11px] uppercase tracking-[.3em] text-ink/50 mb-5">Folgen</div>
+      <ul class="space-y-1">
+        <li>
+          <a href="https://instagram.com/simoneheigl.kommunikation" target="_blank" rel="noopener" class="group flex items-center justify-between border-b rule py-4 hover:text-taupe transition-colors">
+            <span class="font-display text-xl md:text-2xl">Instagram</span>
+            <span class="text-[12px] text-ink/50 group-hover:text-taupe">@simoneheigl.kommunikation ↗</span>
+          </a>
+        </li>
+        <li>
+          <a href="https://facebook.com/simoneheigl01" target="_blank" rel="noopener" class="group flex items-center justify-between border-b rule py-4 hover:text-taupe transition-colors">
+            <span class="font-display text-xl md:text-2xl">Facebook</span>
+            <span class="text-[12px] text-ink/50 group-hover:text-taupe">simoneheigl01 ↗</span>
+          </a>
+        </li>
+        <li>
+          <a href="https://www.linkedin.com/in/simone-heigl-a58195203" target="_blank" rel="noopener" class="group flex items-center justify-between border-b rule py-4 hover:text-taupe transition-colors">
+            <span class="font-display text-xl md:text-2xl">LinkedIn</span>
+            <span class="text-[12px] text-ink/50 group-hover:text-taupe">simone-heigl ↗</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER / IMPRESSUM + NAV ÜBER ENTWÜRFE ============ -->
+<footer class="bg-ink text-paper/80">
+  <div class="max-w-[1280px] mx-auto px-6 md:px-10 py-16">
+    <div class="grid md:grid-cols-3 gap-10 border-b border-white/10 pb-12">
+      <div>
+        <div class="font-display text-2xl text-paper">Simone <span class="italic text-taupe">Heigl</span></div>
+        <p class="text-[13px] uppercase tracking-[.2em] text-paper/50 mt-2">Trainerin, Beraterin &amp; Coach</p>
+      </div>
+      <div class="text-sm leading-relaxed">
+        <div class="text-[11px] uppercase tracking-[.3em] text-taupe mb-3">Impressum</div>
+        <p>Simone Heigl — Trainerin, Beraterin &amp; Coach</p>
+        <p class="text-paper/50 mt-1">Impressumsangaben folgen.</p>
+      </div>
+      <div class="text-sm">
+        <div class="text-[11px] uppercase tracking-[.3em] text-taupe mb-3">Social</div>
+        <div class="flex flex-col gap-1">
+          <a href="https://instagram.com/simoneheigl.kommunikation" target="_blank" rel="noopener" class="hover:text-paper">Instagram</a>
+          <a href="https://facebook.com/simoneheigl01" target="_blank" rel="noopener" class="hover:text-paper">Facebook</a>
+          <a href="https://www.linkedin.com/in/simone-heigl-a58195203" target="_blank" rel="noopener" class="hover:text-paper">LinkedIn</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Navigation über ALLE Entwürfe -->
+    <nav class="pt-10">
+      <div class="text-[11px] uppercase tracking-[.3em] text-taupe mb-5">Entwürfe</div>
+      <ul class="flex flex-wrap gap-x-6 gap-y-3 text-[13px] uppercase tracking-[.14em]">
+        <li><a href="index.html" class="text-paper/60 hover:text-paper">Übersicht</a></li>
+        <li><a href="design-alternative-1.html" aria-current="page" class="text-taupe font-medium border-b border-taupe pb-0.5">Design-Alternative-1</a></li>
+        <li><a href="design-alternative-2.html" class="text-paper/60 hover:text-paper">Design-Alternative-2</a></li>
+        <li><a href="design-alternative-3.html" class="text-paper/60 hover:text-paper">Design-Alternative-3</a></li>
+        <li><a href="design-alternative-4.html" class="text-paper/60 hover:text-paper">Design-Alternative-4</a></li>
+        <li><a href="design-alternative-5.html" class="text-paper/60 hover:text-paper">Design-Alternative-5</a></li>
+        <li><a href="design-alternative-6.html" class="text-paper/60 hover:text-paper">Design-Alternative-6</a></li>
+        <li><a href="design-alternative-7.html" class="text-paper/60 hover:text-paper">Design-Alternative-7</a></li>
+        <li><a href="design-alternative-8.html" class="text-paper/60 hover:text-paper">Design-Alternative-8</a></li>
+        <li><a href="design-alternative-9.html" class="text-paper/60 hover:text-paper">Design-Alternative-9</a></li>
+        <li><a href="design-alternative-10.html" class="text-paper/60 hover:text-paper">Design-Alternative-10</a></li>
+      </ul>
+    </nav>
+
+    <div class="mt-12 flex flex-col sm:flex-row justify-between gap-3 text-[11px] uppercase tracking-[.2em] text-paper/40">
+      <span>© <span id="yr"></span> Simone Heigl</span>
+      <span>Editorial Luxury — Entwurf № 01</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // year
+  document.getElementById('yr').textContent = new Date().getFullYear();
+
+  // Reveal on scroll
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: .12 });
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+  // Cursor dot (desktop)
+  const dot = document.getElementById('dot');
+  if (window.matchMedia('(hover:hover)').matches) {
+    let x=0,y=0,tx=0,ty=0;
+    window.addEventListener('mousemove', e=>{ x=e.clientX; y=e.clientY; });
+    (function loop(){ tx+=(x-tx)*.18; ty+=(y-ty)*.18; dot.style.transform=`translate(${tx}px,${ty}px) translate(-50%,-50%)`; requestAnimationFrame(loop); })();
+    document.querySelectorAll('a,button,input').forEach(el=>{
+      el.addEventListener('mouseenter',()=>dot.classList.add('big'));
+      el.addEventListener('mouseleave',()=>dot.classList.remove('big'));
+    });
+  }
+</script>
+<style>[x-cloak]{display:none!important;}</style>
+</body>
+</html>

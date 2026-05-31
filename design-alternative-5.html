@@ -1,0 +1,517 @@
+<!doctype html>
+<html lang="de" class="scroll-smooth">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Simone Heigl — Trainerin, Beraterin &amp; Coach</title>
+<meta name="description" content="Simone Heigl — Trainerin, Beraterin & Coach. Innere Staerke aufbauen. Ziele und Wuensche klaeren. Veraenderung kompetent meistern." />
+<script src="https://cdn.tailwindcss.com"></script>
+<script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          taupe: '#A99C85',
+          ink: '#111111',
+          sand1: '#F4F0E9',
+          sand2: '#EAE3D6',
+          sand3: '#D8CDB8',
+        },
+        fontFamily: {
+          display: ['"Space Grotesk"', 'sans-serif'],
+          mono: ['"JetBrains Mono"', 'monospace'],
+        },
+      },
+    },
+  };
+</script>
+<style>
+  :root { --line: #111111; }
+  html, body { background:#fff; color:#111111; }
+  body { font-family:'JetBrains Mono', monospace; -webkit-font-smoothing:antialiased; }
+  ::selection { background:#A99C85; color:#fff; }
+
+  /* hard grid borders */
+  .hardline { border-color: var(--line); }
+
+  /* oversized display clamps */
+  .mega { font-size: clamp(3.2rem, 13vw, 13rem); line-height:0.82; letter-spacing:-0.04em; }
+  .big  { font-size: clamp(2rem, 6vw, 5rem); line-height:0.92; letter-spacing:-0.03em; }
+
+  /* marquee */
+  @keyframes scrollx { from { transform:translateX(0); } to { transform:translateX(-50%); } }
+  .marquee { animation: scrollx 26s linear infinite; }
+  .marquee:hover { animation-play-state: paused; }
+
+  /* reveal on scroll */
+  .reveal { opacity:0; transform:translateY(28px); transition:opacity .7s cubic-bezier(.2,.7,.2,1), transform .7s cubic-bezier(.2,.7,.2,1); }
+  .reveal.in { opacity:1; transform:none; }
+
+  /* brutal hover invert */
+  .invert-cell { transition: background-color .25s ease, color .25s ease; }
+  .invert-cell:hover { background:#111; color:#F4F0E9; }
+  .invert-cell:hover .sub { color:#A99C85; }
+
+  /* seminar accordion plus */
+  .acc-num { transition: color .25s ease; }
+
+  /* blinking caret */
+  @keyframes blink { 0%,49%{opacity:1} 50%,100%{opacity:0} }
+  .caret { animation: blink 1s step-end infinite; }
+
+  /* custom cursor dot (desktop) */
+  @media (pointer:fine) {
+    .cursor-dot { position:fixed; top:0; left:0; width:14px; height:14px; background:#A99C85; border-radius:9999px; pointer-events:none; z-index:9999; mix-blend-mode:difference; transform:translate(-50%,-50%); transition:width .2s, height .2s; }
+    .cursor-grow { width:46px; height:46px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .marquee { animation:none; }
+    .reveal { opacity:1; transform:none; }
+    .caret { animation:none; }
+  }
+  /* sticky cta */
+  .grid-bg {
+    background-image:
+      linear-gradient(to right, rgba(17,17,17,.06) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(17,17,17,.06) 1px, transparent 1px);
+    background-size: 64px 64px;
+  }
+</style>
+</head>
+<body x-data="site()" class="font-mono antialiased selection:bg-taupe">
+
+<!-- custom cursor -->
+<div class="cursor-dot hidden md:block" x-ref="cursor"></div>
+
+<!-- TOP META BAR -->
+<div class="fixed top-0 inset-x-0 z-40 bg-ink text-sand1 text-[11px] md:text-xs tracking-widest uppercase">
+  <div class="overflow-hidden whitespace-nowrap py-1.5 border-b border-taupe/40">
+    <div class="marquee inline-block">
+      <span class="mx-6">Kommunikation</span><span class="text-taupe mx-2">/</span>
+      <span class="mx-6">Resilienz</span><span class="text-taupe mx-2">/</span>
+      <span class="mx-6">Fuehrung</span><span class="text-taupe mx-2">/</span>
+      <span class="mx-6">Coaching</span><span class="text-taupe mx-2">/</span>
+      <span class="mx-6">Veraenderung kompetent meistern</span><span class="text-taupe mx-2">/</span>
+      <!-- duplicate for seamless loop -->
+      <span class="mx-6">Kommunikation</span><span class="text-taupe mx-2">/</span>
+      <span class="mx-6">Resilienz</span><span class="text-taupe mx-2">/</span>
+      <span class="mx-6">Fuehrung</span><span class="text-taupe mx-2">/</span>
+      <span class="mx-6">Coaching</span><span class="text-taupe mx-2">/</span>
+      <span class="mx-6">Veraenderung kompetent meistern</span><span class="text-taupe mx-2">/</span>
+    </div>
+  </div>
+</div>
+
+<!-- NAV -->
+<header class="fixed top-[33px] inset-x-0 z-40 bg-white/85 backdrop-blur border-b border-ink">
+  <nav class="mx-auto max-w-[1400px] flex items-stretch justify-between">
+    <a href="#hero" class="px-4 md:px-6 py-3 border-r border-ink font-display font-bold tracking-tight text-lg flex items-center gap-2">
+      <span class="inline-flex items-center justify-center w-7 h-7 bg-ink text-white text-sm">SH</span>
+      <span class="hidden sm:inline">SIMONE&nbsp;HEIGL</span>
+    </a>
+    <div class="hidden md:flex items-stretch text-xs uppercase tracking-widest">
+      <a href="#about" class="px-5 flex items-center border-l border-ink hover:bg-ink hover:text-sand1 transition">Ueber</a>
+      <a href="#leistungen" class="px-5 flex items-center border-l border-ink hover:bg-ink hover:text-sand1 transition">Leistungen</a>
+      <a href="#seminare" class="px-5 flex items-center border-l border-ink hover:bg-ink hover:text-sand1 transition">Seminare</a>
+      <a href="#broschuere" class="px-5 flex items-center border-l border-ink hover:bg-ink hover:text-sand1 transition">Broschuere</a>
+      <a href="#kontakt" class="px-5 flex items-center border-l border-ink bg-taupe text-ink hover:bg-ink hover:text-sand1 transition font-bold">Kontakt&nbsp;→</a>
+    </div>
+    <!-- mobile toggle -->
+    <button @click="menu=!menu" class="md:hidden px-5 border-l border-ink text-xs uppercase tracking-widest" aria-label="Menue">
+      <span x-show="!menu">Menue +</span><span x-show="menu">Schliessen ×</span>
+    </button>
+  </nav>
+  <!-- mobile menu -->
+  <div x-show="menu" x-collapse class="md:hidden border-t border-ink bg-white text-sm uppercase tracking-widest">
+    <a @click="menu=false" href="#about" class="block px-5 py-3 border-b border-ink/20">Ueber</a>
+    <a @click="menu=false" href="#leistungen" class="block px-5 py-3 border-b border-ink/20">Leistungen</a>
+    <a @click="menu=false" href="#seminare" class="block px-5 py-3 border-b border-ink/20">Seminare</a>
+    <a @click="menu=false" href="#broschuere" class="block px-5 py-3 border-b border-ink/20">Broschuere</a>
+    <a @click="menu=false" href="#kontakt" class="block px-5 py-3 bg-taupe text-ink font-bold">Kontakt →</a>
+  </div>
+</header>
+
+<main class="pt-[81px]">
+
+  <!-- HERO -->
+  <section id="hero" class="relative border-b border-ink grid-bg overflow-hidden">
+    <!-- storer / badge -->
+    <div class="absolute right-3 md:right-8 top-6 z-20 rotate-6">
+      <div class="bg-taupe text-ink border border-ink px-3 py-2 text-[10px] md:text-xs uppercase tracking-widest font-bold shadow-[5px_5px_0_0_#111]">
+        <span class="block">★ Neu</span>
+        <span class="block text-[9px] md:text-[10px] font-medium">Naechstes Seminar: Resilienz</span>
+      </div>
+    </div>
+
+    <div class="mx-auto max-w-[1400px]">
+      <!-- top meta row -->
+      <div class="grid grid-cols-2 md:grid-cols-4 text-[10px] md:text-xs uppercase tracking-widest border-b border-ink">
+        <div class="px-4 py-3 border-r border-ink">[01] Trainerin</div>
+        <div class="px-4 py-3 border-r border-ink">[02] Beraterin</div>
+        <div class="px-4 py-3 border-r border-ink">[03] Coach</div>
+        <div class="px-4 py-3 hidden md:block">DE · seit Jahren im Feld</div>
+      </div>
+
+      <!-- mega type -->
+      <div class="px-4 md:px-6 pt-10 md:pt-16 pb-6">
+        <h1 class="font-display font-bold mega">
+          INNERE<br>
+          <span class="text-taupe">STAERKE.</span>
+        </h1>
+      </div>
+
+      <!-- claim row -->
+      <div class="grid md:grid-cols-12 border-t border-ink">
+        <div class="md:col-span-7 px-4 md:px-6 py-6 md:border-r border-ink">
+          <p class="font-display text-xl md:text-3xl leading-tight tracking-tight">
+            Innere Staerke aufbauen. Ziele und Wuensche klaeren.
+            <span class="text-taupe">Veraenderung kompetent meistern.</span><span class="caret text-taupe">_</span>
+          </p>
+        </div>
+        <div class="md:col-span-5 px-4 md:px-6 py-6 flex flex-col justify-between gap-6 bg-sand1">
+          <p class="text-sm md:text-base leading-relaxed">
+            Unser Leben verlangt immer mehr Kompetenz in Veraenderung und Kommunikation.
+            Als Trainerin, Beraterin und Coach begleite ich Sie gerne in Ihre Zukunft.
+          </p>
+          <div class="flex flex-wrap gap-3">
+            <a href="#leistungen" class="invert-cell border border-ink px-4 py-2 text-xs uppercase tracking-widest">Leistungen →</a>
+            <a href="#broschuere" class="invert-cell border border-ink px-4 py-2 text-xs uppercase tracking-widest">Broschuere ↓</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- UEBER MICH -->
+  <section id="about" class="border-b border-ink">
+    <div class="mx-auto max-w-[1400px] grid md:grid-cols-12">
+      <div class="md:col-span-4 border-b md:border-b-0 md:border-r border-ink p-4 md:p-6 bg-ink text-sand1">
+        <div class="text-xs uppercase tracking-widest text-taupe">[ Ueber mich ]</div>
+        <div class="mt-6 font-display big">SH</div>
+        <div class="mt-6 text-sm leading-relaxed text-sand1/80">
+          Simone Heigl<br>Trainerin, Beraterin &amp; Coach
+        </div>
+        <div class="mt-8 grid grid-cols-2 gap-px bg-taupe/30 text-xs">
+          <div class="bg-ink p-3"><span class="text-taupe">→</span> Kommunikation</div>
+          <div class="bg-ink p-3"><span class="text-taupe">→</span> Selbstmanagement</div>
+          <div class="bg-ink p-3"><span class="text-taupe">→</span> Fuehrung</div>
+          <div class="bg-ink p-3"><span class="text-taupe">→</span> Resilienz</div>
+        </div>
+      </div>
+      <div class="md:col-span-8 p-4 md:p-10 flex items-center reveal">
+        <p class="font-display text-2xl md:text-4xl leading-snug tracking-tight">
+          Unser Leben verlangt immer mehr Kompetenz in
+          <span class="bg-sand3 px-1">Veraenderung</span> und
+          <span class="bg-sand3 px-1">Kommunikation</span>.
+          Als Trainerin, Beraterin und Coach begleite ich Sie gerne
+          <span class="text-taupe">in Ihre Zukunft.</span>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- LEISTUNGEN -->
+  <section id="leistungen">
+    <div class="mx-auto max-w-[1400px]">
+      <div class="flex items-baseline justify-between px-4 md:px-6 py-5 border-b border-ink">
+        <h2 class="font-display font-bold big">Leistungen</h2>
+        <span class="text-xs uppercase tracking-widest text-taupe">04 Bereiche</span>
+      </div>
+
+      <div class="grid md:grid-cols-2">
+        <!-- Beratung -->
+        <article class="invert-cell group border-b md:border-r border-ink p-4 md:p-8 reveal">
+          <div class="flex items-baseline justify-between">
+            <span class="font-display text-5xl md:text-7xl font-bold text-taupe acc-num">01</span>
+            <span class="text-xs uppercase tracking-widest sub">Beratung</span>
+          </div>
+          <h3 class="mt-6 font-display text-2xl md:text-3xl tracking-tight leading-tight">Kommunikationsberatung</h3>
+          <p class="mt-4 text-sm md:text-base leading-relaxed">
+            Bei einer Kommunikationsberatung handelt es sich um eine auf die Kommunikation
+            fokussierte Unternehmensberatung. Optimierung von Kommunikationsprozessen,
+            Konfliktmanagement, Einfuehrung von Mitarbeitergespraechen.
+          </p>
+        </article>
+
+        <!-- Training -->
+        <article class="invert-cell group border-b border-ink p-4 md:p-8 reveal">
+          <div class="flex items-baseline justify-between">
+            <span class="font-display text-5xl md:text-7xl font-bold text-taupe acc-num">02</span>
+            <span class="text-xs uppercase tracking-widest sub">Training</span>
+          </div>
+          <h3 class="mt-6 font-display text-2xl md:text-3xl tracking-tight leading-tight">Massgeschneiderte Seminare</h3>
+          <p class="mt-4 text-sm md:text-base leading-relaxed">
+            Als freiberufliche Trainerin biete ich flexible und massgeschneiderte Seminare im
+            Bereich Kommunikation, Selbstmanagement, Fuehrung und Resilienz an. Eine positive
+            Lernatmosphaere lebt von gegenseitigem Vertrauen, Respekt und Akzeptanz.
+          </p>
+        </article>
+
+        <!-- Coaching -->
+        <article class="invert-cell group border-b md:border-r border-ink p-4 md:p-8 reveal">
+          <div class="flex items-baseline justify-between">
+            <span class="font-display text-5xl md:text-7xl font-bold text-taupe acc-num">03</span>
+            <span class="text-xs uppercase tracking-widest sub">Coaching</span>
+          </div>
+          <h3 class="mt-6 font-display text-2xl md:text-3xl tracking-tight leading-tight">Einzel- &amp; Teamcoaching</h3>
+          <p class="mt-4 text-sm md:text-base leading-relaxed">
+            Coaching ist eine der intensivsten Methoden, um persoenliche Veraenderungen zu
+            erreichen. Einzel- oder Teamcoaching.
+          </p>
+        </article>
+
+        <!-- Bewerbercoaching -->
+        <article class="invert-cell group border-b border-ink p-4 md:p-8 reveal">
+          <div class="flex items-baseline justify-between">
+            <span class="font-display text-5xl md:text-7xl font-bold text-taupe acc-num">04</span>
+            <span class="text-xs uppercase tracking-widest sub">Bewerbercoaching</span>
+          </div>
+          <h3 class="mt-6 font-display text-2xl md:text-3xl tracking-tight leading-tight">Souveraen auftreten</h3>
+          <p class="mt-4 text-sm md:text-base leading-relaxed">
+            Unterstuetzung bei der Gestaltung Ihrer Bewerbungsunterlagen oder der Stellenrecherche.
+            Vorbereitung auf ein Vorstellungsgespraech oder ein Assessmentcenter. Lernen Sie
+            souveraen aufzutreten und sich selber professionell zu vermarkten.
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- SEMINARTHEMEN -->
+  <section id="seminare" class="border-y border-ink bg-sand1">
+    <div class="mx-auto max-w-[1400px]">
+      <div class="flex items-baseline justify-between px-4 md:px-6 py-5 border-b border-ink">
+        <h2 class="font-display font-bold big">Seminarthemen</h2>
+        <span class="text-xs uppercase tracking-widest text-taupe">06 Module</span>
+      </div>
+
+      <div x-data="{open:0}" class="divide-y divide-ink border-b border-ink">
+        <!-- item template -->
+        <template x-for="(s,i) in seminars" :key="i">
+          <div class="group">
+            <button @click="open = (open===i+1)?0:(i+1)"
+                    class="w-full text-left px-4 md:px-6 py-5 md:py-7 flex items-start gap-4 md:gap-8 hover:bg-sand2 transition"
+                    :class="open===i+1 ? 'bg-sand2' : ''">
+              <span class="font-display font-bold text-xl md:text-3xl text-taupe shrink-0 w-10 md:w-16" x-text="String(i+1).padStart(2,'0')"></span>
+              <span class="font-display text-lg md:text-3xl tracking-tight leading-tight flex-1" x-text="s.title"></span>
+              <span class="font-display text-2xl md:text-4xl text-ink shrink-0 transition-transform" :class="open===i+1 ? 'rotate-45' : ''">+</span>
+            </button>
+            <div x-show="open===i+1" x-collapse>
+              <p class="px-4 md:px-6 pb-6 md:pb-8 md:pl-[7.5rem] text-sm md:text-lg leading-relaxed max-w-3xl" x-text="s.text"></p>
+            </div>
+          </div>
+        </template>
+      </div>
+    </div>
+  </section>
+
+  <!-- ZITAT -->
+  <section class="border-b border-ink bg-ink text-sand1">
+    <div class="mx-auto max-w-[1400px] px-4 md:px-6 py-16 md:py-28 reveal">
+      <div class="text-taupe text-xs uppercase tracking-widest mb-6">// Zitat</div>
+      <blockquote class="font-display font-medium text-3xl md:text-6xl leading-[1.05] tracking-tight">
+        &bdquo;Of all life skills available to us, <span class="text-taupe">communication</span>
+        is probably the most powerful.&ldquo;
+      </blockquote>
+      <div class="mt-8 text-sm uppercase tracking-widest text-sand1/70">— Bret Morrison</div>
+    </div>
+  </section>
+
+  <!-- BROSCHUERE / LEAD CAPTURE — brutalist "ticket / terminal" -->
+  <section id="broschuere" class="border-b border-ink">
+    <div class="mx-auto max-w-[1400px] grid md:grid-cols-12">
+      <!-- left label block -->
+      <div class="md:col-span-5 border-b md:border-b-0 md:border-r border-ink p-4 md:p-8 bg-taupe text-ink">
+        <div class="text-xs uppercase tracking-widest">[ Download ]</div>
+        <h2 class="mt-6 font-display font-bold big leading-none">DIE<br>BROSCHUERE</h2>
+        <p class="mt-6 text-sm md:text-base leading-relaxed max-w-sm">
+          Alle Leistungen, Seminarthemen und Methoden kompakt als PDF.
+          E-Mail eintragen, Download kommt sofort.
+        </p>
+        <div class="mt-8 inline-flex items-center gap-2 border border-ink px-3 py-1.5 text-[11px] uppercase tracking-widest bg-ink text-sand1">
+          <span class="w-2 h-2 bg-taupe rounded-full"></span> PDF · ca. 1 MB
+        </div>
+      </div>
+
+      <!-- right terminal form -->
+      <div class="md:col-span-7 p-4 md:p-8 grid-bg">
+        <div class="border border-ink bg-white shadow-[8px_8px_0_0_#111]">
+          <!-- terminal header -->
+          <div class="flex items-center justify-between border-b border-ink px-4 py-2 text-[11px] uppercase tracking-widest">
+            <span>broschuere_download.exe</span>
+            <span class="flex gap-1.5">
+              <span class="w-3 h-3 border border-ink bg-sand3"></span>
+              <span class="w-3 h-3 border border-ink bg-taupe"></span>
+              <span class="w-3 h-3 border border-ink bg-ink"></span>
+            </span>
+          </div>
+
+          <div class="p-4 md:p-6">
+            <!-- form state -->
+            <form x-show="!sent" @submit.prevent="submit()" class="space-y-4">
+              <label class="block text-xs uppercase tracking-widest">
+                <span class="text-taupe">&gt;</span> Ihre E-Mail-Adresse
+              </label>
+              <div class="flex flex-col sm:flex-row border border-ink">
+                <span class="hidden sm:flex items-center px-3 border-r border-ink text-taupe select-none">@</span>
+                <input x-model="email" type="email" required placeholder="name@firma.de"
+                       class="flex-1 px-3 py-3 bg-white outline-none text-sm placeholder:text-ink/40 focus:bg-sand1 transition" />
+                <button type="submit"
+                        class="bg-ink text-sand1 px-6 py-3 text-xs uppercase tracking-widest hover:bg-taupe hover:text-ink transition border-t sm:border-t-0 sm:border-l border-ink">
+                  Download&nbsp;↓
+                </button>
+              </div>
+              <p class="text-[11px] text-ink/50 leading-relaxed">
+                Demo-Formular ohne Backend. Keine Daten werden gesendet oder gespeichert.
+              </p>
+            </form>
+
+            <!-- danke state -->
+            <div x-show="sent" x-cloak class="space-y-4">
+              <div class="font-display text-2xl md:text-3xl tracking-tight">
+                <span class="text-taupe">✓</span> Danke!
+              </div>
+              <p class="text-sm leading-relaxed">
+                Die Broschuere ist unterwegs an <span class="font-bold" x-text="email"></span>.
+                <span class="block mt-2 text-ink/60 text-xs">(Demo — in der Live-Version startet hier der PDF-Download.)</span>
+              </p>
+              <a href="#" class="inline-block border border-ink px-4 py-2 text-xs uppercase tracking-widest invert-cell">
+                broschuere.pdf direkt oeffnen →
+              </a>
+              <button @click="sent=false; email=''" class="block text-[11px] uppercase tracking-widest text-ink/50 underline mt-2">Zuruecksetzen</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- KONTAKT / CTA -->
+  <section id="kontakt" class="border-b border-ink">
+    <div class="mx-auto max-w-[1400px]">
+      <div class="px-4 md:px-6 py-14 md:py-24 text-center reveal">
+        <div class="text-taupe text-xs uppercase tracking-widest mb-6">[ Kontakt ]</div>
+        <p class="font-display font-bold mega leading-[0.85]">GESPRAECH<span class="text-taupe">?</span></p>
+        <p class="mt-8 font-display text-xl md:text-3xl tracking-tight">Ich freue mich auf ein persoenliches Gespraech.</p>
+
+        <!-- socials as hard grid -->
+        <div class="mt-12 grid sm:grid-cols-3 border border-ink max-w-3xl mx-auto">
+          <a href="https://instagram.com/simoneheigl.kommunikation" target="_blank" rel="noopener"
+             class="invert-cell p-5 border-b sm:border-b-0 sm:border-r border-ink text-left">
+            <div class="text-xs uppercase tracking-widest sub text-taupe">Instagram</div>
+            <div class="mt-2 font-display text-sm md:text-base break-all">simoneheigl.kommunikation →</div>
+          </a>
+          <a href="https://facebook.com/simoneheigl01" target="_blank" rel="noopener"
+             class="invert-cell p-5 border-b sm:border-b-0 sm:border-r border-ink text-left">
+            <div class="text-xs uppercase tracking-widest sub text-taupe">Facebook</div>
+            <div class="mt-2 font-display text-sm md:text-base break-all">simoneheigl01 →</div>
+          </a>
+          <a href="https://www.linkedin.com/in/simone-heigl-a58195203" target="_blank" rel="noopener"
+             class="invert-cell p-5 text-left">
+            <div class="text-xs uppercase tracking-widest sub text-taupe">LinkedIn</div>
+            <div class="mt-2 font-display text-sm md:text-base break-all">simone-heigl →</div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER / IMPRESSUM + DESIGN-NAV -->
+  <footer class="bg-ink text-sand1">
+    <div class="mx-auto max-w-[1400px]">
+      <div class="grid md:grid-cols-12 border-b border-taupe/30">
+        <div class="md:col-span-5 p-6 md:p-8 border-b md:border-b-0 md:border-r border-taupe/30">
+          <div class="font-display font-bold text-2xl flex items-center gap-2">
+            <span class="inline-flex items-center justify-center w-8 h-8 bg-taupe text-ink text-base">SH</span>
+            Simone Heigl
+          </div>
+          <p class="mt-3 text-sm text-sand1/70">Trainerin, Beraterin &amp; Coach</p>
+          <p class="mt-6 text-xs uppercase tracking-widest text-taupe">Impressum</p>
+          <p class="mt-2 text-sm text-sand1/70">Simone Heigl — Trainerin, Beraterin &amp; Coach<br>Impressumsangaben folgen</p>
+        </div>
+
+        <!-- design alternatives nav -->
+        <div class="md:col-span-7 p-6 md:p-8">
+          <p class="text-xs uppercase tracking-widest text-taupe mb-4">// Design-Varianten</p>
+          <nav class="grid grid-cols-2 sm:grid-cols-3 gap-px bg-taupe/20 text-xs">
+            <a href="index.html" class="bg-ink p-3 hover:bg-taupe hover:text-ink transition">Uebersicht</a>
+            <a href="design-alternative-1.html" class="bg-ink p-3 hover:bg-taupe hover:text-ink transition">Design-Alternative-1</a>
+            <a href="design-alternative-2.html" class="bg-ink p-3 hover:bg-taupe hover:text-ink transition">Design-Alternative-2</a>
+            <a href="design-alternative-3.html" class="bg-ink p-3 hover:bg-taupe hover:text-ink transition">Design-Alternative-3</a>
+            <a href="design-alternative-4.html" class="bg-ink p-3 hover:bg-taupe hover:text-ink transition">Design-Alternative-4</a>
+            <a href="design-alternative-5.html" aria-current="page" class="bg-taupe text-ink p-3 font-bold">Design-Alternative-5</a>
+            <a href="design-alternative-6.html" class="bg-ink p-3 hover:bg-taupe hover:text-ink transition">Design-Alternative-6</a>
+            <a href="design-alternative-7.html" class="bg-ink p-3 hover:bg-taupe hover:text-ink transition">Design-Alternative-7</a>
+            <a href="design-alternative-8.html" class="bg-ink p-3 hover:bg-taupe hover:text-ink transition">Design-Alternative-8</a>
+            <a href="design-alternative-9.html" class="bg-ink p-3 hover:bg-taupe hover:text-ink transition">Design-Alternative-9</a>
+            <a href="design-alternative-10.html" class="bg-ink p-3 hover:bg-taupe hover:text-ink transition">Design-Alternative-10</a>
+          </nav>
+        </div>
+      </div>
+      <div class="px-6 md:px-8 py-4 text-[11px] uppercase tracking-widest text-sand1/40 flex flex-wrap justify-between gap-2">
+        <span>© <span x-text="year"></span> Simone Heigl</span>
+        <span>Entwurf #5 · Brutalist-Elegant</span>
+      </div>
+    </div>
+  </footer>
+
+</main>
+
+<!-- STICKY MOBILE CTA -->
+<a href="#kontakt" class="md:hidden fixed bottom-4 right-4 z-40 bg-taupe text-ink border border-ink px-5 py-3 text-xs uppercase tracking-widest font-bold shadow-[4px_4px_0_0_#111]">Gespraech →</a>
+
+<script>
+  function site() {
+    return {
+      menu: false,
+      sent: false,
+      email: '',
+      year: new Date().getFullYear(),
+      seminars: [
+        { title: 'Resilienz … die eigene Widerstandskraft erhoehen',
+          text: 'Seien Sie bereit fuer die heutigen und zukuenftigen Herausforderungen, Belastungen des Alltags und im Business.' },
+        { title: 'Klartext reden!',
+          text: 'Die Faehigkeit, effizient und wirkungsvoll zu kommunizieren, ist zu einem der wichtigsten Erfolgsfaktoren im Umgang mit Kunden geworden.' },
+        { title: 'Kundenbeschwerde – was nun?',
+          text: 'Ein effektives Beschwerdemanagement und der professionelle Umgang mit Reklamationen bieten Ihnen eine wichtige Moeglichkeit der Kundenbindung.' },
+        { title: 'Rhetorik … sicher und souveraen vor Publikum sprechen',
+          text: 'Ein erfolgreicher Auftritt vor Publikum haengt zum Grossteil von Ihrer rhetorischen Ausdruckskraft ab.' },
+        { title: 'Konfliktmanagement',
+          text: 'Wie entstehen die Konflikte und wie koennen wir diese konstruktiv loesen?' },
+        { title: 'Vom Mitarbeiter zur Fuehrungskraft',
+          text: 'Lernen Sie mit den groessten Herausforderungen des Fuehrungsalltags umzugehen und trainieren Sie Ihre Kommunikations- und Fuehrungskompetenz.' },
+      ],
+      submit() {
+        if (this.email && this.email.includes('@')) { this.sent = true; }
+      },
+    };
+  }
+
+  // reveal on scroll
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  // custom cursor (desktop only)
+  if (window.matchMedia('(pointer:fine)').matches) {
+    const dot = document.querySelector('.cursor-dot');
+    if (dot) {
+      window.addEventListener('mousemove', (e) => {
+        dot.style.left = e.clientX + 'px';
+        dot.style.top = e.clientY + 'px';
+      });
+      document.querySelectorAll('a,button').forEach(el => {
+        el.addEventListener('mouseenter', () => dot.classList.add('cursor-grow'));
+        el.addEventListener('mouseleave', () => dot.classList.remove('cursor-grow'));
+      });
+    }
+  }
+</script>
+<style>[x-cloak]{display:none!important}</style>
+</body>
+</html>

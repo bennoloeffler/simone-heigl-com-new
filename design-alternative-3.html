@@ -1,0 +1,536 @@
+<!doctype html>
+<html lang="de" class="scroll-smooth">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Simone Heigl · Trainerin, Beraterin &amp; Coach</title>
+<meta name="description" content="Simone Heigl – Trainerin, Beraterin &amp; Coach. Innere Staerke aufbauen. Ziele und Wuensche klaeren. Veraenderung kompetent meistern.">
+<script src="https://cdn.tailwindcss.com"></script>
+<script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Nunito+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          taupe: '#A99C85',
+          taupedk: '#8C7E66',
+          ink: '#141210',
+          cream: '#F4F0E9',
+          sand: '#EAE3D6',
+          clay: '#D8CDB8',
+        },
+        fontFamily: {
+          display: ['Fraunces', 'serif'],
+          body: ['"Nunito Sans"', 'system-ui', 'sans-serif'],
+        },
+      },
+    },
+  }
+</script>
+<style>
+  body { font-family: 'Nunito Sans', system-ui, sans-serif; background:#FFFDFA; color:#141210; }
+  .font-display { font-family: 'Fraunces', serif; }
+
+  /* ---- organic blobs ---- */
+  .blob {
+    position:absolute; z-index:0; pointer-events:none;
+    filter: blur(2px);
+    animation: morph 18s ease-in-out infinite alternate;
+  }
+  @keyframes morph {
+    0%   { border-radius: 42% 58% 63% 37% / 41% 44% 56% 59%; transform: rotate(0deg) scale(1); }
+    50%  { border-radius: 58% 42% 33% 67% / 63% 38% 62% 37%; transform: rotate(8deg) scale(1.06); }
+    100% { border-radius: 38% 62% 56% 44% / 52% 63% 37% 48%; transform: rotate(-6deg) scale(0.98); }
+  }
+  @keyframes floaty { 0%,100%{ transform: translateY(0) } 50%{ transform: translateY(-16px) } }
+  .floaty { animation: floaty 9s ease-in-out infinite; }
+
+  /* organic radius helpers */
+  .r-blob   { border-radius: 56% 44% 60% 40% / 47% 58% 42% 53%; }
+  .r-blob-2 { border-radius: 40% 60% 47% 53% / 60% 41% 59% 40%; }
+  .r-soft   { border-radius: 2.2rem; }
+
+  /* reveal on scroll */
+  .reveal { opacity:0; transform: translateY(28px); transition: opacity .8s cubic-bezier(.2,.7,.2,1), transform .8s cubic-bezier(.2,.7,.2,1); }
+  .reveal.in { opacity:1; transform:none; }
+
+  /* marquee */
+  .marquee-track { display:inline-flex; white-space:nowrap; animation: scroll-x 32s linear infinite; }
+  @keyframes scroll-x { from{ transform: translateX(0) } to{ transform: translateX(-50%) } }
+
+  /* link squiggle */
+  .squig { background-image: linear-gradient(currentColor,currentColor); background-size:0% 2px; background-repeat:no-repeat; background-position:left bottom; transition: background-size .35s ease; }
+  .squig:hover { background-size:100% 2px; }
+
+  /* sticky cursor dot */
+  #cursor-dot { position:fixed; top:0; left:0; width:34px; height:34px; border-radius:50%; border:1.5px solid #A99C85; pointer-events:none; z-index:60; transform: translate(-50%,-50%); transition: width .2s, height .2s, background-color .2s, opacity .3s; mix-blend-mode:multiply; opacity:0; }
+  #cursor-dot.grow { width:64px; height:64px; background:rgba(169,156,133,.18); }
+  @media (hover:none){ #cursor-dot{ display:none; } }
+
+  ::selection { background:#D8CDB8; color:#141210; }
+  .grain::after{ content:""; position:absolute; inset:0; pointer-events:none; opacity:.045; mix-blend-mode:multiply; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+  @media (prefers-reduced-motion: reduce){ .blob,.floaty,.marquee-track{ animation:none !important; } .reveal{ opacity:1 !important; transform:none !important; } }
+</style>
+</head>
+<body x-data="site()" class="overflow-x-hidden antialiased">
+
+<div id="cursor-dot"></div>
+
+<!-- ============ NAV ============ -->
+<header class="fixed top-0 inset-x-0 z-50">
+  <nav class="mx-auto max-w-6xl mt-4 px-4">
+    <div class="flex items-center justify-between rounded-full bg-white/70 backdrop-blur-md border border-clay/50 shadow-sm pl-5 pr-2 py-2">
+      <a href="#hero" class="flex items-center gap-2.5 group">
+        <span class="grid place-items-center w-9 h-9 rounded-full bg-taupe text-white font-display text-sm shadow-inner r-blob-2">SH</span>
+        <span class="font-display text-lg leading-none">Simone&nbsp;Heigl</span>
+      </a>
+      <div class="hidden md:flex items-center gap-1 text-sm">
+        <a href="#ueber" class="px-3 py-2 rounded-full hover:bg-cream transition">Ueber mich</a>
+        <a href="#leistungen" class="px-3 py-2 rounded-full hover:bg-cream transition">Leistungen</a>
+        <a href="#themen" class="px-3 py-2 rounded-full hover:bg-cream transition">Seminare</a>
+        <a href="#kontakt" class="px-3 py-2 rounded-full hover:bg-cream transition">Kontakt</a>
+        <button @click="open=true" class="ml-1 px-4 py-2 rounded-full bg-ink text-white hover:bg-taupedk transition shadow-sm">Broschuere</button>
+      </div>
+      <button @click="mobile=!mobile" class="md:hidden grid place-items-center w-10 h-10 rounded-full hover:bg-cream" aria-label="Menue">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+    </div>
+    <div x-show="mobile" x-cloak x-transition class="md:hidden mt-2 rounded-3xl bg-white/90 backdrop-blur border border-clay/50 p-3 text-sm shadow-lg">
+      <a href="#ueber" @click="mobile=false" class="block px-3 py-2 rounded-2xl hover:bg-cream">Ueber mich</a>
+      <a href="#leistungen" @click="mobile=false" class="block px-3 py-2 rounded-2xl hover:bg-cream">Leistungen</a>
+      <a href="#themen" @click="mobile=false" class="block px-3 py-2 rounded-2xl hover:bg-cream">Seminare</a>
+      <a href="#kontakt" @click="mobile=false" class="block px-3 py-2 rounded-2xl hover:bg-cream">Kontakt</a>
+      <button @click="open=true;mobile=false" class="mt-1 w-full px-3 py-2 rounded-2xl bg-ink text-white text-left">Broschuere herunterladen</button>
+    </div>
+  </nav>
+</header>
+
+<!-- ============ HERO ============ -->
+<section id="hero" class="relative min-h-screen flex items-center grain overflow-hidden pt-28 pb-16">
+  <!-- blobs -->
+  <div class="blob floaty" style="top:-8%; right:-6%; width:46vw; height:46vw; max-width:620px; max-height:620px; background:radial-gradient(circle at 35% 30%, #EAE3D6, #A99C85);"></div>
+  <div class="blob" style="bottom:-14%; left:-10%; width:38vw; height:38vw; max-width:520px; max-height:520px; background:radial-gradient(circle at 60% 40%, #F4F0E9, #D8CDB8); animation-delay:-6s;"></div>
+  <div class="blob" style="top:30%; left:42%; width:18vw; height:18vw; max-width:240px; max-height:240px; background:radial-gradient(circle at 50% 50%, #D8CDB8, #A99C85); opacity:.5; animation-delay:-11s;"></div>
+
+  <div class="relative z-10 mx-auto max-w-6xl px-6 w-full grid lg:grid-cols-12 gap-10 items-center">
+    <div class="lg:col-span-7">
+      <span class="inline-flex items-center gap-2 text-xs uppercase tracking-[0.22em] text-taupedk bg-white/60 backdrop-blur rounded-full px-4 py-1.5 border border-clay/60">
+        <span class="w-1.5 h-1.5 rounded-full bg-taupe animate-pulse"></span> Trainerin · Beraterin · Coach
+      </span>
+      <h1 class="mt-6 font-display font-light leading-[0.98] text-ink" style="font-size:clamp(2.6rem,6.4vw,5.2rem);">
+        Innere Staerke
+        <span class="block italic text-taupedk">aufbauen.</span>
+        <span class="block">Ziele und Wuensche <span class="relative whitespace-nowrap">klaeren.
+          <svg class="absolute -bottom-2 left-0 w-full" height="14" viewBox="0 0 300 14" preserveAspectRatio="none" fill="none"><path d="M2 9C60 3 120 3 180 7c40 3 80 1 116-4" stroke="#A99C85" stroke-width="4" stroke-linecap="round"/></svg>
+        </span></span>
+        <span class="block">Veraenderung kompetent <span class="italic text-taupedk">meistern.</span></span>
+      </h1>
+      <p class="mt-7 max-w-xl text-lg text-ink/70 leading-relaxed">
+        Unser Leben verlangt immer mehr Kompetenz in Veraenderung und Kommunikation. Als Trainerin, Beraterin und Coach begleite ich Sie gerne in Ihre Zukunft.
+      </p>
+      <div class="mt-9 flex flex-wrap items-center gap-4">
+        <a href="#kontakt" class="group inline-flex items-center gap-2 rounded-full bg-ink text-white px-7 py-3.5 hover:bg-taupedk transition shadow-md">
+          Gespraech vereinbaren
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="group-hover:translate-x-1 transition"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+        <button @click="open=true" class="inline-flex items-center gap-2 rounded-full bg-white border border-clay px-6 py-3.5 hover:bg-cream transition">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8C7E66" stroke-width="2"><path d="M12 3v12m0 0l-4-4m4 4l4-4M5 21h14"/></svg>
+          Broschuere (PDF)
+        </button>
+      </div>
+    </div>
+
+    <!-- organic monogram card -->
+    <div class="lg:col-span-5 relative">
+      <div class="relative mx-auto floaty" style="width:min(78vw,400px);">
+        <div class="r-blob bg-gradient-to-br from-taupe to-taupedk aspect-square grid place-items-center shadow-xl">
+          <span class="font-display text-white leading-none" style="font-size:clamp(5rem,16vw,9rem);">SH</span>
+        </div>
+        <!-- floating störer / badge -->
+        <div class="absolute -top-4 -left-4 rotate-[-8deg] floaty" style="animation-delay:-3s;">
+          <div class="r-soft bg-white shadow-lg border border-clay/60 px-4 py-2.5">
+            <p class="text-[11px] uppercase tracking-widest text-taupedk">Naechstes Seminar</p>
+            <p class="font-display text-sm">„Klartext reden!“</p>
+          </div>
+        </div>
+        <div class="absolute -bottom-5 -right-3 rotate-[6deg]">
+          <span class="inline-flex items-center gap-1.5 rounded-full bg-taupe text-white text-xs font-semibold px-4 py-2 shadow-lg">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.3L22 9l-5 4.6 1.3 6.9L12 17.8 5.7 20.5 7 13.6 2 9l7.1-.7z"/></svg>
+            Neu · Resilienz
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <a href="#ueber" class="absolute bottom-6 left-1/2 -translate-x-1/2 z-10 text-taupedk/70 flex flex-col items-center gap-1 text-xs">
+    <span>nach unten</span>
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="animate-bounce"><path d="M12 5v14M6 13l6 6 6-6"/></svg>
+  </a>
+</section>
+
+<!-- ============ MARQUEE ============ -->
+<div class="bg-taupe text-cream py-4 overflow-hidden select-none">
+  <div class="marquee-track text-2xl md:text-3xl font-display font-light">
+    <span class="mx-6">Kommunikation</span><span class="mx-6 text-cream/50">✦</span>
+    <span class="mx-6">Selbstmanagement</span><span class="mx-6 text-cream/50">✦</span>
+    <span class="mx-6">Fuehrung</span><span class="mx-6 text-cream/50">✦</span>
+    <span class="mx-6">Resilienz</span><span class="mx-6 text-cream/50">✦</span>
+    <span class="mx-6">Kommunikation</span><span class="mx-6 text-cream/50">✦</span>
+    <span class="mx-6">Selbstmanagement</span><span class="mx-6 text-cream/50">✦</span>
+    <span class="mx-6">Fuehrung</span><span class="mx-6 text-cream/50">✦</span>
+    <span class="mx-6">Resilienz</span><span class="mx-6 text-cream/50">✦</span>
+  </div>
+</div>
+
+<!-- ============ UEBER MICH ============ -->
+<section id="ueber" class="relative py-24 md:py-32 overflow-hidden">
+  <div class="blob" style="top:10%; right:-12%; width:30vw; height:30vw; max-width:420px; max-height:420px; background:radial-gradient(circle, #F4F0E9, #EAE3D6); opacity:.7;"></div>
+  <div class="relative z-10 mx-auto max-w-5xl px-6">
+    <div class="grid md:grid-cols-12 gap-10 items-center">
+      <div class="md:col-span-5 reveal">
+        <div class="r-blob-2 bg-cream border border-clay/60 aspect-[4/5] grid place-items-center relative overflow-hidden">
+          <span class="font-display text-taupe/30" style="font-size:clamp(7rem,20vw,12rem);">S</span>
+          <div class="absolute bottom-5 left-5 right-5 bg-white/80 backdrop-blur rounded-2xl p-4 text-sm text-ink/70">
+            „Veraenderung gelingt im Vertrauen — Schritt fuer Schritt.“
+          </div>
+        </div>
+      </div>
+      <div class="md:col-span-7 reveal">
+        <p class="text-xs uppercase tracking-[0.22em] text-taupedk mb-4">Ueber mich</p>
+        <h2 class="font-display font-light text-ink leading-tight" style="font-size:clamp(1.9rem,4vw,3rem);">
+          Ich begleite Menschen in <span class="italic text-taupedk">ihre Zukunft.</span>
+        </h2>
+        <p class="mt-6 text-lg text-ink/70 leading-relaxed">
+          Unser Leben verlangt immer mehr Kompetenz in Veraenderung und Kommunikation. Als Trainerin, Beraterin und Coach begleite ich Sie gerne in Ihre Zukunft.
+        </p>
+        <div class="mt-8 flex flex-wrap gap-3">
+          <span class="rounded-full bg-sand px-4 py-2 text-sm">Kommunikation</span>
+          <span class="rounded-full bg-sand px-4 py-2 text-sm">Selbstmanagement</span>
+          <span class="rounded-full bg-sand px-4 py-2 text-sm">Fuehrung</span>
+          <span class="rounded-full bg-sand px-4 py-2 text-sm">Resilienz</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ LEISTUNGEN ============ -->
+<section id="leistungen" class="relative py-24 md:py-32 bg-cream grain overflow-hidden">
+  <div class="relative z-10 mx-auto max-w-6xl px-6">
+    <div class="max-w-2xl reveal">
+      <p class="text-xs uppercase tracking-[0.22em] text-taupedk mb-4">Leistungen</p>
+      <h2 class="font-display font-light text-ink leading-tight" style="font-size:clamp(2rem,4.4vw,3.2rem);">
+        Vier Wege, gemeinsam <span class="italic text-taupedk">zu wachsen.</span>
+      </h2>
+    </div>
+
+    <div class="mt-14 grid sm:grid-cols-2 gap-6">
+      <!-- Beratung -->
+      <article class="reveal group relative bg-white r-soft p-8 border border-clay/50 hover:shadow-xl hover:-translate-y-1 transition-all overflow-hidden">
+        <div class="absolute -top-10 -right-10 w-32 h-32 r-blob bg-sand group-hover:bg-clay transition-colors"></div>
+        <div class="relative">
+          <span class="grid place-items-center w-12 h-12 r-blob-2 bg-taupe text-white mb-5">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          </span>
+          <h3 class="font-display text-2xl mb-3">Beratung</h3>
+          <p class="text-ink/70 leading-relaxed">Bei einer Kommunikationsberatung handelt es sich um eine auf die Kommunikation fokussierte Unternehmensberatung.</p>
+          <p class="mt-3 text-sm text-ink/55">Optimierung von Kommunikationsprozessen, Konfliktmanagement, Einfuehrung von Mitarbeitergespraechen.</p>
+        </div>
+      </article>
+      <!-- Training -->
+      <article class="reveal group relative bg-white r-soft p-8 border border-clay/50 hover:shadow-xl hover:-translate-y-1 transition-all overflow-hidden" style="transition-delay:.05s">
+        <div class="absolute -top-10 -right-10 w-32 h-32 r-blob-2 bg-sand group-hover:bg-clay transition-colors"></div>
+        <div class="relative">
+          <span class="grid place-items-center w-12 h-12 r-blob bg-taupe text-white mb-5">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M2 3h20v14H2zM8 21h8M12 17v4"/></svg>
+          </span>
+          <h3 class="font-display text-2xl mb-3">Training</h3>
+          <p class="text-ink/70 leading-relaxed">Als freiberufliche Trainerin biete ich flexible und massgeschneiderte Seminare im Bereich Kommunikation, Selbstmanagement, Fuehrung und Resilienz an.</p>
+          <p class="mt-3 text-sm text-ink/55">Eine positive Lernatmosphaere lebt von gegenseitigem Vertrauen, Respekt und Akzeptanz.</p>
+        </div>
+      </article>
+      <!-- Coaching -->
+      <article class="reveal group relative bg-white r-soft p-8 border border-clay/50 hover:shadow-xl hover:-translate-y-1 transition-all overflow-hidden">
+        <div class="absolute -top-10 -right-10 w-32 h-32 r-blob bg-sand group-hover:bg-clay transition-colors"></div>
+        <div class="relative">
+          <span class="grid place-items-center w-12 h-12 r-blob-2 bg-taupe text-white mb-5">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 21s-7-4.5-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 11c0 5.5-7 10-7 10z"/></svg>
+          </span>
+          <h3 class="font-display text-2xl mb-3">Coaching</h3>
+          <p class="text-ink/70 leading-relaxed">Coaching ist eine der intensivsten Methoden, um persoenliche Veraenderungen zu erreichen.</p>
+          <p class="mt-3 text-sm text-ink/55">Einzel- oder Teamcoaching.</p>
+        </div>
+      </article>
+      <!-- Bewerbercoaching -->
+      <article class="reveal group relative bg-white r-soft p-8 border border-clay/50 hover:shadow-xl hover:-translate-y-1 transition-all overflow-hidden" style="transition-delay:.05s">
+        <div class="absolute -top-10 -right-10 w-32 h-32 r-blob-2 bg-sand group-hover:bg-clay transition-colors"></div>
+        <div class="relative">
+          <span class="grid place-items-center w-12 h-12 r-blob bg-taupe text-white mb-5">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM19 8v6M22 11h-6"/></svg>
+          </span>
+          <h3 class="font-display text-2xl mb-3">Bewerbercoaching</h3>
+          <p class="text-ink/70 leading-relaxed">Unterstuetzung bei der Gestaltung Ihrer Bewerbungsunterlagen oder der Stellenrecherche. Vorbereitung auf ein Vorstellungsgespraech oder ein Assessmentcenter.</p>
+          <p class="mt-3 text-sm text-ink/55">Lernen Sie souveraen aufzutreten und sich selber professionell zu vermarkten.</p>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SEMINARTHEMEN ============ -->
+<section id="themen" class="relative py-24 md:py-32 overflow-hidden">
+  <div class="blob" style="bottom:0%; left:-14%; width:34vw; height:34vw; max-width:460px; max-height:460px; background:radial-gradient(circle, #EAE3D6, #D8CDB8); opacity:.6;"></div>
+  <div class="relative z-10 mx-auto max-w-6xl px-6">
+    <div class="flex flex-wrap items-end justify-between gap-6 reveal">
+      <div class="max-w-2xl">
+        <p class="text-xs uppercase tracking-[0.22em] text-taupedk mb-4">Seminarthemen</p>
+        <h2 class="font-display font-light text-ink leading-tight" style="font-size:clamp(2rem,4.4vw,3.2rem);">
+          Sechs Themen fuer <span class="italic text-taupedk">starke Menschen.</span>
+        </h2>
+      </div>
+      <span class="inline-flex items-center gap-1.5 rounded-full bg-ink text-white text-xs font-semibold px-4 py-2">6 Seminare</span>
+    </div>
+
+    <div class="mt-14 grid md:grid-cols-2 lg:grid-cols-3 gap-6"
+         x-data="{themen:[
+            {n:'01',t:'Resilienz … die eigene Widerstandskraft erhoehen',d:'Seien Sie bereit fuer die heutigen und zukuenftigen Herausforderungen, Belastungen des Alltags und im Business.'},
+            {n:'02',t:'Klartext reden!',d:'Die Faehigkeit, effizient und wirkungsvoll zu kommunizieren, ist zu einem der wichtigsten Erfolgsfaktoren im Umgang mit Kunden geworden.'},
+            {n:'03',t:'Kundenbeschwerde – was nun?',d:'Ein effektives Beschwerdemanagement und der professionelle Umgang mit Reklamationen bieten Ihnen eine wichtige Moeglichkeit der Kundenbindung.'},
+            {n:'04',t:'Rhetorik … sicher und souveraen vor Publikum sprechen',d:'Ein erfolgreicher Auftritt vor Publikum haengt zum Grossteil von Ihrer rhetorischen Ausdruckskraft ab.'},
+            {n:'05',t:'Konfliktmanagement',d:'Wie entstehen die Konflikte und wie koennen wir diese konstruktiv loesen?'},
+            {n:'06',t:'Vom Mitarbeiter zur Fuehrungskraft',d:'Lernen Sie mit den groessten Herausforderungen des Fuehrungsalltags umzugehen und trainieren Sie Ihre Kommunikations- und Fuehrungskompetenz.'}
+         ]}">
+      <template x-for="(it,i) in themen" :key="i">
+        <article class="reveal group relative bg-white r-soft p-7 border border-clay/50 hover:bg-taupe hover:text-white transition-all duration-300 overflow-hidden">
+          <span class="font-display text-5xl text-clay group-hover:text-white/40 transition-colors" x-text="it.n"></span>
+          <h3 class="mt-3 font-display text-xl leading-snug" x-text="it.t"></h3>
+          <p class="mt-3 text-sm text-ink/65 group-hover:text-white/85 leading-relaxed transition-colors" x-text="it.d"></p>
+          <div class="mt-5 inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-taupedk group-hover:text-white transition-colors">
+            Seminar
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="group-hover:translate-x-1 transition"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </div>
+        </article>
+      </template>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ZITAT ============ -->
+<section class="relative py-24 md:py-36 bg-ink text-cream overflow-hidden">
+  <div class="blob" style="top:-20%; right:-8%; width:40vw; height:40vw; max-width:540px; max-height:540px; background:radial-gradient(circle, #8C7E66, #141210); opacity:.7;"></div>
+  <div class="relative z-10 mx-auto max-w-4xl px-6 text-center reveal">
+    <svg class="mx-auto mb-8 text-taupe" width="46" height="46" viewBox="0 0 24 24" fill="currentColor"><path d="M7.17 6A5.17 5.17 0 0 0 2 11.17V18h6.83v-6.83H5.5A1.67 1.67 0 0 1 7.17 9.5zM18 6a5.17 5.17 0 0 0-5.17 5.17V18h6.84v-6.83h-3.34A1.67 1.67 0 0 1 18 9.5z"/></svg>
+    <blockquote class="font-display font-light italic leading-tight" style="font-size:clamp(1.8rem,4.6vw,3.4rem);">
+      „Of all life skills available to us, communication is probably the most powerful.“
+    </blockquote>
+    <p class="mt-8 text-taupe tracking-wide">— Bret Morrison</p>
+  </div>
+</section>
+
+<!-- ============ PDF / LEAD-CAPTURE (Inline-Banner) ============ -->
+<section id="broschuere" class="relative py-24 md:py-28 overflow-hidden">
+  <div class="relative z-10 mx-auto max-w-5xl px-6">
+    <div class="relative r-soft bg-gradient-to-br from-sand to-clay border border-clay/60 p-8 md:p-12 overflow-hidden grain">
+      <div class="blob" style="top:-30%; right:-6%; width:24vw; height:24vw; max-width:300px; max-height:300px; background:radial-gradient(circle,#F4F0E9,#A99C85); opacity:.6;"></div>
+      <div class="relative grid md:grid-cols-12 gap-8 items-center">
+        <div class="md:col-span-7">
+          <span class="inline-flex items-center gap-1.5 rounded-full bg-ink text-white text-xs font-semibold px-3 py-1.5">PDF · Gratis</span>
+          <h2 class="mt-4 font-display font-light text-ink leading-tight" style="font-size:clamp(1.8rem,4vw,2.8rem);">
+            Die Broschuere zum <span class="italic text-taupedk">Mitnehmen.</span>
+          </h2>
+          <p class="mt-3 text-ink/70 max-w-md">Alle Leistungen und Seminarthemen kompakt als PDF. E-Mail eintragen — und herunterladen.</p>
+        </div>
+        <div class="md:col-span-5" x-data="{mail:'',sent:false}">
+          <form @submit.prevent="if(mail){sent=true}" class="bg-white/80 backdrop-blur rounded-3xl p-5 border border-white shadow-lg">
+            <template x-if="!sent">
+              <div>
+                <label class="block text-xs uppercase tracking-widest text-taupedk mb-2">Ihre E-Mail</label>
+                <input type="email" x-model="mail" required placeholder="name@beispiel.de"
+                       class="w-full rounded-full border border-clay bg-white px-5 py-3 outline-none focus:ring-2 focus:ring-taupe">
+                <button class="mt-3 w-full rounded-full bg-ink text-white py-3 font-semibold hover:bg-taupedk transition flex items-center justify-center gap-2">
+                  Broschuere herunterladen
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12m0 0l-4-4m4 4l4-4M5 21h14"/></svg>
+                </button>
+                <p class="mt-2 text-[11px] text-ink/45 text-center">Demo-Formular — kein Versand, keine Speicherung.</p>
+              </div>
+            </template>
+            <template x-if="sent">
+              <div class="text-center py-3">
+                <div class="mx-auto grid place-items-center w-14 h-14 r-blob bg-taupe text-white mb-3">
+                  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 13l4 4L19 7"/></svg>
+                </div>
+                <p class="font-display text-xl">Vielen Dank!</p>
+                <p class="text-sm text-ink/60 mt-1">In der echten Seite startet jetzt der Download.</p>
+                <a href="#" class="mt-3 inline-block text-sm squig text-taupedk font-semibold">Broschuere.pdf (Demo)</a>
+              </div>
+            </template>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ KONTAKT ============ -->
+<section id="kontakt" class="relative py-24 md:py-32 bg-cream grain overflow-hidden">
+  <div class="blob floaty" style="bottom:-16%; right:-10%; width:36vw; height:36vw; max-width:480px; max-height:480px; background:radial-gradient(circle,#EAE3D6,#A99C85); opacity:.5;"></div>
+  <div class="relative z-10 mx-auto max-w-4xl px-6 text-center reveal">
+    <span class="grid place-items-center mx-auto w-16 h-16 r-blob bg-taupe text-white font-display text-2xl mb-7 floaty">SH</span>
+    <h2 class="font-display font-light text-ink leading-tight" style="font-size:clamp(2rem,5vw,3.6rem);">
+      Ich freue mich auf ein <span class="italic text-taupedk">persoenliches Gespraech.</span>
+    </h2>
+    <div class="mt-10 flex flex-wrap items-center justify-center gap-4">
+      <a href="https://instagram.com/simoneheigl.kommunikation" target="_blank" rel="noopener" class="group inline-flex items-center gap-2 rounded-full bg-white border border-clay px-6 py-3 hover:bg-taupe hover:text-white transition">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+        Instagram
+      </a>
+      <a href="https://facebook.com/simoneheigl01" target="_blank" rel="noopener" class="group inline-flex items-center gap-2 rounded-full bg-white border border-clay px-6 py-3 hover:bg-taupe hover:text-white transition">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+        Facebook
+      </a>
+      <a href="https://www.linkedin.com/in/simone-heigl-a58195203" target="_blank" rel="noopener" class="group inline-flex items-center gap-2 rounded-full bg-white border border-clay px-6 py-3 hover:bg-taupe hover:text-white transition">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5A2.5 2.5 0 1 1 0 3.5a2.5 2.5 0 0 1 4.98 0zM0 8h5v16H0zM7.5 8H12v2.2h.07c.63-1.2 2.17-2.46 4.46-2.46C21.3 7.74 24 10 24 14.6V24h-5v-8.2c0-1.96-.7-3.3-2.46-3.3-1.34 0-2.14.9-2.49 1.77-.13.3-.16.74-.16 1.18V24h-5z"/></svg>
+        LinkedIn
+      </a>
+    </div>
+    <button @click="open=true" class="mt-10 inline-flex items-center gap-2 rounded-full bg-ink text-white px-8 py-4 hover:bg-taupedk transition shadow-md">
+      Broschuere herunterladen
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12m0 0l-4-4m4 4l4-4M5 21h14"/></svg>
+    </button>
+  </div>
+</section>
+
+<!-- ============ FOOTER / IMPRESSUM ============ -->
+<footer class="relative bg-ink text-cream/80 pt-16 pb-10 overflow-hidden">
+  <div class="blob" style="top:-30%; left:-8%; width:30vw; height:30vw; max-width:380px; max-height:380px; background:radial-gradient(circle,#8C7E66,#141210); opacity:.5;"></div>
+  <div class="relative z-10 mx-auto max-w-6xl px-6">
+    <div class="grid md:grid-cols-12 gap-10">
+      <div class="md:col-span-5">
+        <div class="flex items-center gap-3">
+          <span class="grid place-items-center w-11 h-11 r-blob bg-taupe text-white font-display">SH</span>
+          <div>
+            <p class="font-display text-lg text-cream">Simone Heigl</p>
+            <p class="text-sm text-cream/60">Trainerin, Beraterin &amp; Coach</p>
+          </div>
+        </div>
+        <p class="mt-6 text-sm text-cream/55 max-w-xs">Impressumsangaben folgen.</p>
+        <div class="mt-5 flex gap-3">
+          <a href="https://instagram.com/simoneheigl.kommunikation" target="_blank" rel="noopener" aria-label="Instagram" class="grid place-items-center w-9 h-9 rounded-full bg-white/10 hover:bg-taupe transition">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+          </a>
+          <a href="https://facebook.com/simoneheigl01" target="_blank" rel="noopener" aria-label="Facebook" class="grid place-items-center w-9 h-9 rounded-full bg-white/10 hover:bg-taupe transition">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+          </a>
+          <a href="https://www.linkedin.com/in/simone-heigl-a58195203" target="_blank" rel="noopener" aria-label="LinkedIn" class="grid place-items-center w-9 h-9 rounded-full bg-white/10 hover:bg-taupe transition">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5A2.5 2.5 0 1 1 0 3.5a2.5 2.5 0 0 1 4.98 0zM0 8h5v16H0zM7.5 8H12v2.2h.07c.63-1.2 2.17-2.46 4.46-2.46C21.3 7.74 24 10 24 14.6V24h-5v-8.2c0-1.96-.7-3.3-2.46-3.3-1.34 0-2.14.9-2.49 1.77-.13.3-.16.74-.16 1.18V24h-5z"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <nav class="md:col-span-7" aria-label="Entwurf-Navigation">
+        <p class="text-xs uppercase tracking-[0.2em] text-cream/45 mb-4">Entwuerfe &amp; Uebersicht</p>
+        <ul class="grid grid-cols-2 sm:grid-cols-3 gap-x-6 gap-y-2.5 text-sm">
+          <li><a href="index.html" class="text-cream/70 hover:text-taupe squig transition">Uebersicht</a></li>
+          <li><a href="design-alternative-1.html" class="text-cream/70 hover:text-taupe squig transition">Design-Alternative-1</a></li>
+          <li><a href="design-alternative-2.html" class="text-cream/70 hover:text-taupe squig transition">Design-Alternative-2</a></li>
+          <li><a href="design-alternative-3.html" aria-current="page" class="text-taupe font-semibold underline decoration-2 underline-offset-4">Design-Alternative-3</a></li>
+          <li><a href="design-alternative-4.html" class="text-cream/70 hover:text-taupe squig transition">Design-Alternative-4</a></li>
+          <li><a href="design-alternative-5.html" class="text-cream/70 hover:text-taupe squig transition">Design-Alternative-5</a></li>
+          <li><a href="design-alternative-6.html" class="text-cream/70 hover:text-taupe squig transition">Design-Alternative-6</a></li>
+          <li><a href="design-alternative-7.html" class="text-cream/70 hover:text-taupe squig transition">Design-Alternative-7</a></li>
+          <li><a href="design-alternative-8.html" class="text-cream/70 hover:text-taupe squig transition">Design-Alternative-8</a></li>
+          <li><a href="design-alternative-9.html" class="text-cream/70 hover:text-taupe squig transition">Design-Alternative-9</a></li>
+          <li><a href="design-alternative-10.html" class="text-cream/70 hover:text-taupe squig transition">Design-Alternative-10</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="mt-12 pt-6 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-cream/45">
+      <p>© <span id="yr"></span> Simone Heigl — Trainerin, Beraterin &amp; Coach</p>
+      <p>Entwurf „Warm Organic“ · Design-Alternative-3</p>
+    </div>
+  </div>
+</footer>
+
+<!-- ============ SLIDE-IN BROSCHUERE-MODAL ============ -->
+<div x-show="open" x-cloak class="fixed inset-0 z-[70]" @keydown.escape.window="open=false">
+  <div class="absolute inset-0 bg-ink/40 backdrop-blur-sm" @click="open=false" x-transition.opacity></div>
+  <div x-show="open" x-transition:enter="transition ease-out duration-400"
+       x-transition:enter-start="translate-x-full" x-transition:enter-end="translate-x-0"
+       x-transition:leave="transition ease-in duration-300"
+       x-transition:leave-start="translate-x-0" x-transition:leave-end="translate-x-full"
+       class="absolute top-0 right-0 h-full w-full max-w-md bg-white shadow-2xl overflow-y-auto grain">
+    <div class="relative p-7 min-h-full flex flex-col">
+      <div class="blob" style="top:-10%; right:-20%; width:60%; height:30%; background:radial-gradient(circle,#EAE3D6,#A99C85); opacity:.5;"></div>
+      <button @click="open=false" class="relative z-10 self-end grid place-items-center w-10 h-10 rounded-full bg-cream hover:bg-sand transition" aria-label="Schliessen">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+      <div class="relative z-10 mt-4 flex-1 flex flex-col justify-center" x-data="{mail:'',sent:false}">
+        <span class="grid place-items-center w-16 h-16 r-blob bg-taupe text-white font-display text-xl mb-6">SH</span>
+        <template x-if="!sent">
+          <div>
+            <h3 class="font-display font-light text-ink leading-tight" style="font-size:clamp(1.8rem,6vw,2.4rem);">
+              Broschuere als <span class="italic text-taupedk">PDF.</span>
+            </h3>
+            <p class="mt-3 text-ink/65">Tragen Sie Ihre E-Mail ein — und laden Sie die Broschuere herunter.</p>
+            <form @submit.prevent="if(mail){sent=true}" class="mt-7">
+              <label class="block text-xs uppercase tracking-widest text-taupedk mb-2">Ihre E-Mail</label>
+              <input type="email" x-model="mail" required placeholder="name@beispiel.de"
+                     class="w-full rounded-full border border-clay bg-cream px-5 py-3.5 outline-none focus:ring-2 focus:ring-taupe">
+              <button class="mt-4 w-full rounded-full bg-ink text-white py-3.5 font-semibold hover:bg-taupedk transition flex items-center justify-center gap-2">
+                Jetzt herunterladen
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12m0 0l-4-4m4 4l4-4M5 21h14"/></svg>
+              </button>
+              <p class="mt-3 text-[11px] text-ink/45 text-center">Demo — preventDefault, kein Backend, keine Speicherung.</p>
+            </form>
+          </div>
+        </template>
+        <template x-if="sent">
+          <div class="text-center">
+            <div class="mx-auto grid place-items-center w-20 h-20 r-blob bg-taupe text-white mb-5 floaty">
+              <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 13l4 4L19 7"/></svg>
+            </div>
+            <h3 class="font-display text-2xl">Vielen Dank!</h3>
+            <p class="mt-2 text-ink/65">In der echten Seite startet jetzt automatisch der Download Ihrer Broschuere.</p>
+            <a href="#" class="mt-5 inline-flex items-center gap-2 rounded-full bg-cream px-6 py-3 font-semibold text-taupedk hover:bg-sand transition">
+              Broschuere.pdf (Demo)
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12m0 0l-4-4m4 4l4-4M5 21h14"/></svg>
+            </a>
+            <button @click="open=false" class="mt-4 block mx-auto text-sm squig text-ink/50">Fenster schliessen</button>
+          </div>
+        </template>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function site(){ return { open:false, mobile:false } }
+
+  document.getElementById('yr').textContent = new Date().getFullYear();
+
+  // reveal on scroll
+  const io = new IntersectionObserver((es)=>{
+    es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  },{threshold:.14});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+  // custom cursor dot (desktop)
+  const dot = document.getElementById('cursor-dot');
+  if (window.matchMedia('(hover:hover)').matches){
+    window.addEventListener('mousemove', e=>{
+      dot.style.opacity = '1';
+      dot.style.left = e.clientX+'px';
+      dot.style.top  = e.clientY+'px';
+    });
+    document.querySelectorAll('a,button,input').forEach(el=>{
+      el.addEventListener('mouseenter',()=>dot.classList.add('grow'));
+      el.addEventListener('mouseleave',()=>dot.classList.remove('grow'));
+    });
+  }
+</script>
+</body>
+</html>

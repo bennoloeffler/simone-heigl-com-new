@@ -1,0 +1,605 @@
+<!doctype html>
+<html lang="de" class="scroll-smooth">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Simone Heigl — Trainerin, Beraterin &amp; Coach</title>
+<meta name="description" content="Innere Stärke aufbauen. Ziele und Wünsche klären. Veränderung kompetent meistern. Simone Heigl — Trainerin, Beraterin & Coach." />
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,500;12..96,700;12..96,800&family=Spectral:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet">
+
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          taupe:   '#A99C85',
+          taupe2:  '#8d7f68',
+          sand:    '#F4F0E9',
+          sand2:   '#EAE3D6',
+          sand3:   '#D8CDB8',
+          ink:     '#111111',
+          ink2:    '#1a1a1a',
+        },
+        fontFamily: {
+          display: ['"Bricolage Grotesque"', 'system-ui', 'sans-serif'],
+          serif:   ['Spectral', 'Georgia', 'serif'],
+        },
+      }
+    }
+  }
+</script>
+
+<style>
+  :root { --taupe:#A99C85; --ink:#111111; }
+  html, body { background:#0d0c0b; }
+
+  /* ---- Scroll-snap immersive stage ---- */
+  .stage {
+    height: 100vh; height: 100svh;
+    overflow-y: scroll;
+    scroll-snap-type: y mandatory;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+  }
+  .stage::-webkit-scrollbar { display:none; }
+  .scene {
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+    min-height: 100vh; min-height: 100svh;
+    position: relative;
+  }
+  /* scenes that contain a lot (seminars/footer) may exceed one screen on mobile */
+  .scene--auto { scroll-snap-align: start; min-height: 100vh; min-height:100svh; }
+
+  /* ---- Film grain + vignette overlays ---- */
+  .grain::before{
+    content:""; position:absolute; inset:0; pointer-events:none; z-index:2; opacity:.06;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    mix-blend-mode:overlay;
+  }
+  .vignette::after{
+    content:""; position:absolute; inset:0; pointer-events:none; z-index:1;
+    background:radial-gradient(120% 90% at 50% 35%, transparent 40%, rgba(0,0,0,.55) 100%);
+  }
+
+  /* ---- Reveal on scroll ---- */
+  .reveal { opacity:0; transform:translateY(26px); transition:opacity .9s cubic-bezier(.16,1,.3,1), transform .9s cubic-bezier(.16,1,.3,1); }
+  .reveal.in { opacity:1; transform:none; }
+  .reveal-d1{transition-delay:.08s} .reveal-d2{transition-delay:.16s} .reveal-d3{transition-delay:.24s} .reveal-d4{transition-delay:.32s} .reveal-d5{transition-delay:.40s}
+
+  /* ---- Kinetic hero word swap ---- */
+  .word-rotator{ display:inline-grid; }
+  .word-rotator > span{ grid-area:1/1; opacity:0; transform:translateY(.4em); transition:opacity .6s, transform .6s; }
+  .word-rotator > span.active{ opacity:1; transform:none; }
+
+  /* ---- Marquee ---- */
+  @keyframes marquee { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+  .marquee-track{ display:flex; width:max-content; animation:marquee 32s linear infinite; }
+  .marquee:hover .marquee-track{ animation-play-state:paused; }
+
+  /* ---- Custom cursor ---- */
+  .cursor-dot{ position:fixed; top:0; left:0; width:9px;height:9px;border-radius:50%; background:var(--taupe); z-index:90; pointer-events:none; transform:translate(-50%,-50%); transition:width .25s,height .25s,background .25s,opacity .3s; mix-blend-mode:difference; }
+  .cursor-ring{ position:fixed; top:0; left:0; width:42px;height:42px;border:1px solid rgba(169,156,133,.7); border-radius:50%; z-index:89; pointer-events:none; transform:translate(-50%,-50%); transition:transform .12s ease-out, width .25s,height .25s,opacity .3s; }
+  @media (hover:none){ .cursor-dot,.cursor-ring{display:none} }
+
+  /* progress rail */
+  .rail-tick{ width:8px;height:8px;border-radius:50%;border:1px solid rgba(169,156,133,.55); transition:all .35s; }
+  .rail-tick.active{ background:var(--taupe); border-color:var(--taupe); transform:scale(1.5); box-shadow:0 0 0 4px rgba(169,156,133,.18); }
+
+  .text-shadow-cine{ text-shadow:0 2px 40px rgba(0,0,0,.45); }
+  ::selection{ background:#A99C85; color:#0d0c0b; }
+
+  /* numbered seminar accordion line */
+  .seminar-row{ transition:background .4s, padding .4s; }
+  .seminar-row:hover{ background:rgba(169,156,133,.08); }
+
+  @media (prefers-reduced-motion: reduce){
+    .reveal{opacity:1;transform:none;transition:none}
+    .marquee-track{animation:none}
+    .stage{scroll-snap-type:none}
+  }
+</style>
+</head>
+
+<body class="font-serif text-sand antialiased selection:bg-taupe">
+
+<!-- custom cursor -->
+<div class="cursor-dot" id="cDot"></div>
+<div class="cursor-ring" id="cRing"></div>
+
+<!-- ====================== STICKY NAV ====================== -->
+<header class="fixed top-0 inset-x-0 z-50">
+  <nav class="mx-auto max-w-7xl px-6 sm:px-10 h-20 flex items-center justify-between">
+    <a href="#hero" data-nav class="group flex items-center gap-3">
+      <span class="grid place-items-center w-10 h-10 rounded-full border border-taupe/60 font-display font-extrabold text-taupe text-sm tracking-tight transition group-hover:bg-taupe group-hover:text-ink">SH</span>
+      <span class="hidden sm:block font-display font-medium tracking-tight text-sand/90">Simone&nbsp;Heigl</span>
+    </a>
+
+    <div class="hidden md:flex items-center gap-7 font-display text-[13px] tracking-wide text-sand/70">
+      <a href="#about"    data-nav class="hover:text-taupe transition">Über mich</a>
+      <a href="#leistungen" data-nav class="hover:text-taupe transition">Leistungen</a>
+      <a href="#seminare" data-nav class="hover:text-taupe transition">Seminare</a>
+      <a href="#zitat"    data-nav class="hover:text-taupe transition">Stimme</a>
+      <a href="#kontakt"  data-nav class="hover:text-taupe transition">Kontakt</a>
+    </div>
+
+    <a href="#broschuere" data-nav
+       class="hidden sm:inline-flex items-center gap-2 rounded-full bg-taupe text-ink font-display font-medium text-[13px] px-5 py-2.5 hover:bg-sand transition">
+       Broschüre <span aria-hidden="true">↓</span>
+    </a>
+
+    <!-- mobile menu -->
+    <div x-data="{open:false}" class="md:hidden">
+      <button @click="open=!open" :aria-expanded="open" aria-label="Menü"
+        class="grid place-items-center w-11 h-11 rounded-full border border-taupe/50 text-taupe">
+        <svg x-show="!open" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+        <svg x-show="open" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+      <div x-show="open" x-transition.opacity @click.away="open=false"
+        class="absolute right-4 top-16 w-56 rounded-2xl bg-ink2/95 backdrop-blur border border-taupe/20 p-4 font-display text-sand/85">
+        <a @click="open=false" href="#about"      data-nav class="block py-2 hover:text-taupe">Über mich</a>
+        <a @click="open=false" href="#leistungen" data-nav class="block py-2 hover:text-taupe">Leistungen</a>
+        <a @click="open=false" href="#seminare"   data-nav class="block py-2 hover:text-taupe">Seminare</a>
+        <a @click="open=false" href="#zitat"      data-nav class="block py-2 hover:text-taupe">Stimme</a>
+        <a @click="open=false" href="#broschuere" data-nav class="block py-2 hover:text-taupe">Broschüre</a>
+        <a @click="open=false" href="#kontakt"    data-nav class="block py-2 text-taupe">Kontakt →</a>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<!-- right-side progress rail -->
+<aside class="fixed right-5 top-1/2 -translate-y-1/2 z-50 hidden lg:flex flex-col gap-4" aria-hidden="true">
+  <span class="rail-tick" data-rail="hero"></span>
+  <span class="rail-tick" data-rail="about"></span>
+  <span class="rail-tick" data-rail="leistungen"></span>
+  <span class="rail-tick" data-rail="seminare"></span>
+  <span class="rail-tick" data-rail="zitat"></span>
+  <span class="rail-tick" data-rail="broschuere"></span>
+  <span class="rail-tick" data-rail="kontakt"></span>
+</aside>
+
+<!-- ====================== STAGE (scroll-snap) ====================== -->
+<main class="stage" id="stage">
+
+  <!-- ============ SCENE 1 — HERO ============ -->
+  <section id="hero" class="scene grain vignette flex items-center justify-center overflow-hidden"
+           style="background:
+             radial-gradient(80% 60% at 50% 0%, rgba(169,156,133,.20), transparent 60%),
+             linear-gradient(180deg,#15130f 0%, #0d0c0b 55%, #100e0b 100%);">
+
+    <!-- giant background watermark initials -->
+    <span aria-hidden="true"
+      class="pointer-events-none select-none absolute -bottom-[8vh] right-[-4vw] font-display font-extrabold leading-none text-taupe/[0.06]"
+      style="font-size:clamp(18rem,46vw,52rem)">SH</span>
+
+    <!-- floating störer / badge -->
+    <a href="#seminare" data-nav
+       class="absolute top-28 sm:top-32 right-6 sm:right-12 z-10 group"
+       style="animation:floatBadge 6s ease-in-out infinite">
+      <span class="relative grid place-items-center w-28 h-28 sm:w-32 sm:h-32 rounded-full bg-taupe text-ink rotate-[-8deg] group-hover:rotate-0 transition-transform duration-500">
+        <span class="absolute inset-1 rounded-full border border-ink/30"></span>
+        <span class="text-center font-display leading-tight">
+          <span class="block text-[10px] tracking-[0.25em] uppercase opacity-70">Neu</span>
+          <span class="block text-[15px] font-bold">6 Seminar-<br>themen</span>
+        </span>
+      </span>
+    </a>
+
+    <div class="relative z-10 px-6 text-center max-w-5xl mx-auto">
+      <p class="reveal in font-display text-[12px] sm:text-sm tracking-[0.45em] uppercase text-taupe mb-7">
+        Trainerin · Beraterin · Coach
+      </p>
+
+      <h1 class="reveal in reveal-d1 font-display font-extrabold tracking-tight text-sand text-shadow-cine"
+          style="font-size:clamp(2.6rem,8.2vw,7rem); line-height:0.96;">
+        Innere&nbsp;Stärke<br>
+        <span class="text-taupe">aufbauen.</span>
+      </h1>
+
+      <p class="reveal in reveal-d2 mt-7 mx-auto max-w-2xl text-lg sm:text-2xl text-sand/75 font-light leading-relaxed">
+        Ziele und Wünsche klären.
+        <span class="block sm:inline">Veränderung kompetent meistern.</span>
+      </p>
+
+      <div class="reveal in reveal-d3 mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
+        <a href="#kontakt" data-nav
+           class="inline-flex items-center gap-2 rounded-full bg-taupe text-ink font-display font-semibold px-8 py-3.5 hover:bg-sand transition">
+           Gespräch anfragen <span aria-hidden="true">→</span>
+        </a>
+        <a href="#about" data-nav
+           class="inline-flex items-center gap-2 rounded-full border border-taupe/50 text-sand font-display px-8 py-3.5 hover:border-taupe hover:text-taupe transition">
+           Mehr erfahren
+        </a>
+      </div>
+    </div>
+
+    <!-- scroll cue -->
+    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2 text-taupe/70">
+      <span class="font-display text-[11px] tracking-[0.3em] uppercase">Scrollen</span>
+      <span class="w-px h-10 bg-gradient-to-b from-taupe/70 to-transparent overflow-hidden relative">
+        <span class="absolute inset-0 bg-taupe" style="animation:cue 1.8s ease-in-out infinite"></span>
+      </span>
+    </div>
+  </section>
+
+  <!-- ============ SCENE 2 — ÜBER MICH ============ -->
+  <section id="about" class="scene grain flex items-center overflow-hidden"
+           style="background:linear-gradient(180deg,#100e0b,#15130f);">
+    <div class="mx-auto max-w-6xl px-6 sm:px-10 grid lg:grid-cols-12 gap-10 items-center w-full">
+
+      <div class="lg:col-span-5 reveal">
+        <div class="relative aspect-[3/4] max-w-sm rounded-[2rem] overflow-hidden"
+             style="background:
+               radial-gradient(120% 80% at 30% 20%, rgba(216,205,184,.35), transparent 55%),
+               linear-gradient(150deg,#A99C85 0%, #8d7f68 55%, #5f5642 100%);">
+          <span aria-hidden="true" class="absolute inset-0 grid place-items-center font-display font-extrabold text-ink/80" style="font-size:13rem;line-height:1">S</span>
+          <div class="absolute bottom-5 left-5 right-5 rounded-2xl bg-ink/55 backdrop-blur px-5 py-4">
+            <p class="font-display text-sand font-semibold">Simone Heigl</p>
+            <p class="text-sand/70 text-sm">Kommunikation · Selbstmanagement · Führung · Resilienz</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="lg:col-span-7">
+        <p class="reveal font-display text-taupe text-sm tracking-[0.35em] uppercase mb-5">01 — Über mich</p>
+        <h2 class="reveal reveal-d1 font-display font-bold text-sand tracking-tight leading-[1.05] mb-8"
+            style="font-size:clamp(2rem,4.6vw,3.4rem)">
+          Ich begleite Sie<br><span class="text-taupe">in Ihre Zukunft.</span>
+        </h2>
+        <p class="reveal reveal-d2 text-xl sm:text-2xl font-light leading-relaxed text-sand/80 max-w-2xl">
+          Unser Leben verlangt immer mehr Kompetenz in Veränderung und Kommunikation.
+          Als Trainerin, Beraterin und Coach begleite ich Sie gerne in Ihre Zukunft.
+        </p>
+
+        <div class="reveal reveal-d3 mt-10 grid grid-cols-3 gap-6 max-w-md">
+          <div><p class="font-display font-bold text-taupe text-lg">Klarheit</p><p class="text-sand/55 text-sm">in Zielen</p></div>
+          <div><p class="font-display font-bold text-taupe text-lg">Stärke</p><p class="text-sand/55 text-sm">im Alltag</p></div>
+          <div><p class="font-display font-bold text-taupe text-lg">Wirkung</p><p class="text-sand/55 text-sm">in der Kommunikation</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SCENE 3 — LEISTUNGEN ============ -->
+  <section id="leistungen" class="scene scene--auto grain flex items-center py-28 lg:py-0"
+           style="background:linear-gradient(180deg,#15130f,#0e0d0b);">
+    <div class="mx-auto max-w-6xl px-6 sm:px-10 w-full">
+      <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-12">
+        <div>
+          <p class="reveal font-display text-taupe text-sm tracking-[0.35em] uppercase mb-3">02 — Leistungen</p>
+          <h2 class="reveal reveal-d1 font-display font-bold text-sand tracking-tight" style="font-size:clamp(2rem,4.6vw,3.4rem)">Vier Wege.<br>Ein Ziel.</h2>
+        </div>
+        <p class="reveal reveal-d2 max-w-sm text-sand/60 font-light">Maßgeschneidert für Menschen und Organisationen, die Veränderung gestalten wollen.</p>
+      </div>
+
+      <div class="grid sm:grid-cols-2 gap-5"
+           x-data="{f:null}">
+        <!-- Beratung -->
+        <article class="reveal group rounded-3xl border border-taupe/15 bg-white/[0.02] p-7 hover:bg-taupe/[0.06] transition"
+                 @mouseenter="f='b'" @mouseleave="f=null">
+          <div class="flex items-start justify-between mb-4">
+            <h3 class="font-display font-bold text-2xl text-sand">Beratung</h3>
+            <span class="font-display text-taupe/50 text-sm">01</span>
+          </div>
+          <p class="text-sand/75 font-light leading-relaxed">
+            Bei einer Kommunikationsberatung handelt es sich um eine auf die Kommunikation fokussierte Unternehmensberatung.
+          </p>
+          <div class="mt-4 flex flex-wrap gap-2 text-[12px] font-display">
+            <span class="rounded-full border border-taupe/25 px-3 py-1 text-taupe/80">Kommunikationsprozesse</span>
+            <span class="rounded-full border border-taupe/25 px-3 py-1 text-taupe/80">Konfliktmanagement</span>
+            <span class="rounded-full border border-taupe/25 px-3 py-1 text-taupe/80">Mitarbeitergespräche</span>
+          </div>
+        </article>
+
+        <!-- Training -->
+        <article class="reveal reveal-d1 group rounded-3xl border border-taupe/15 bg-white/[0.02] p-7 hover:bg-taupe/[0.06] transition">
+          <div class="flex items-start justify-between mb-4">
+            <h3 class="font-display font-bold text-2xl text-sand">Training</h3>
+            <span class="font-display text-taupe/50 text-sm">02</span>
+          </div>
+          <p class="text-sand/75 font-light leading-relaxed">
+            Als freiberufliche Trainerin biete ich flexible und maßgeschneiderte Seminare im Bereich Kommunikation, Selbstmanagement, Führung und Resilienz an.
+          </p>
+          <p class="mt-3 text-sand/55 font-light italic text-sm">
+            … positive Lernatmosphäre … gegenseitiges Vertrauen, Respekt und Akzeptanz.
+          </p>
+        </article>
+
+        <!-- Coaching -->
+        <article class="reveal reveal-d2 group rounded-3xl border border-taupe/15 bg-white/[0.02] p-7 hover:bg-taupe/[0.06] transition">
+          <div class="flex items-start justify-between mb-4">
+            <h3 class="font-display font-bold text-2xl text-sand">Coaching</h3>
+            <span class="font-display text-taupe/50 text-sm">03</span>
+          </div>
+          <p class="text-sand/75 font-light leading-relaxed">
+            Coaching ist eine der intensivsten Methoden, um persönliche Veränderungen zu erreichen.
+          </p>
+          <p class="mt-3 text-sand/55 font-light text-sm">Einzel- oder Teamcoaching.</p>
+        </article>
+
+        <!-- Bewerbercoaching -->
+        <article class="reveal reveal-d3 group rounded-3xl border border-taupe/15 bg-white/[0.02] p-7 hover:bg-taupe/[0.06] transition">
+          <div class="flex items-start justify-between mb-4">
+            <h3 class="font-display font-bold text-2xl text-sand">Bewerbercoaching</h3>
+            <span class="font-display text-taupe/50 text-sm">04</span>
+          </div>
+          <p class="text-sand/75 font-light leading-relaxed">
+            Unterstützung bei der Gestaltung Ihrer Bewerbungsunterlagen oder der Stellenrecherche. Vorbereitung auf ein Vorstellungsgespräch oder ein Assessmentcenter.
+          </p>
+          <p class="mt-3 text-taupe/90 font-light text-sm">Lernen Sie souverän aufzutreten und sich selber professionell zu vermarkten.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SCENE 4 — SEMINARE ============ -->
+  <section id="seminare" class="scene scene--auto grain flex flex-col justify-center py-28 lg:py-0"
+           style="background:linear-gradient(180deg,#0e0d0b,#13110d);">
+    <!-- marquee header -->
+    <div class="marquee overflow-hidden mb-10 select-none" aria-hidden="true">
+      <div class="marquee-track items-center text-taupe/15 font-display font-extrabold tracking-tight" style="font-size:clamp(2.5rem,7vw,5.5rem)">
+        <span class="px-8">Seminarthemen</span><span class="px-8">·</span><span class="px-8">Resilienz</span><span class="px-8">·</span><span class="px-8">Rhetorik</span><span class="px-8">·</span><span class="px-8">Führung</span><span class="px-8">·</span>
+        <span class="px-8">Seminarthemen</span><span class="px-8">·</span><span class="px-8">Resilienz</span><span class="px-8">·</span><span class="px-8">Rhetorik</span><span class="px-8">·</span><span class="px-8">Führung</span><span class="px-8">·</span>
+      </div>
+    </div>
+
+    <div class="mx-auto max-w-5xl px-6 sm:px-10 w-full" x-data="{open:1}">
+      <p class="reveal font-display text-taupe text-sm tracking-[0.35em] uppercase mb-8">03 — Sechs Seminarthemen</p>
+
+      <div class="divide-y divide-taupe/12 border-y border-taupe/12">
+        <!-- row template -->
+        <template x-for="(s,i) in [
+          {n:'01', t:'Resilienz … die eigene Widerstandskraft erhöhen', d:'Seien Sie bereit für die heutigen und zukünftigen Herausforderungen, Belastungen des Alltags und im Business.'},
+          {n:'02', t:'Klartext reden!', d:'Die Fähigkeit, effizient und wirkungsvoll zu kommunizieren, ist zu einem der wichtigsten Erfolgsfaktoren im Umgang mit Kunden geworden.'},
+          {n:'03', t:'Kundenbeschwerde – was nun?', d:'Ein effektives Beschwerdemanagement und der professionelle Umgang mit Reklamationen bieten Ihnen eine wichtige Möglichkeit der Kundenbindung.'},
+          {n:'04', t:'Rhetorik … sicher und souverän vor Publikum sprechen', d:'Ein erfolgreicher Auftritt vor Publikum hängt zum Großteil von Ihrer rhetorischen Ausdruckskraft ab.'},
+          {n:'05', t:'Konfliktmanagement', d:'Wie entstehen die Konflikte und wie können wir diese konstruktiv lösen?'},
+          {n:'06', t:'Vom Mitarbeiter zur Führungskraft', d:'Lernen Sie mit den größten Herausforderungen des Führungsalltags umzugehen und trainieren Sie Ihre Kommunikations- und Führungskompetenz.'}
+        ]" :key="i">
+          <div class="seminar-row reveal px-3 sm:px-5">
+            <button class="w-full flex items-center gap-5 py-5 text-left"
+                    @click="open === i ? open=null : open=i"
+                    :aria-expanded="open===i">
+              <span class="font-display text-taupe/60 text-sm w-8 shrink-0" x-text="s.n"></span>
+              <span class="font-display font-semibold text-sand flex-1 leading-snug"
+                    :class="open===i ? 'text-taupe' : ''"
+                    style="font-size:clamp(1.05rem,2.2vw,1.55rem)" x-text="s.t"></span>
+              <span class="shrink-0 grid place-items-center w-9 h-9 rounded-full border border-taupe/40 text-taupe transition-transform"
+                    :class="open===i ? 'rotate-45 bg-taupe text-ink' : ''">+</span>
+            </button>
+            <div x-show="open===i" x-collapse>
+              <p class="pb-6 pl-13 sm:pl-13 max-w-2xl text-sand/70 font-light leading-relaxed" style="padding-left:3.25rem" x-text="s.d"></p>
+            </div>
+          </div>
+        </template>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SCENE 5 — ZITAT ============ -->
+  <section id="zitat" class="scene grain vignette flex items-center justify-center text-center overflow-hidden"
+           style="background:
+             radial-gradient(70% 60% at 50% 50%, rgba(169,156,133,.16), transparent 70%),
+             linear-gradient(180deg,#13110d,#0d0c0b);">
+    <span aria-hidden="true" class="pointer-events-none absolute top-[8%] left-1/2 -translate-x-1/2 font-display text-taupe/10 leading-none select-none" style="font-size:clamp(12rem,30vw,26rem)">“</span>
+    <blockquote class="relative z-10 px-6 max-w-4xl mx-auto">
+      <p class="reveal font-serif italic text-sand text-shadow-cine" style="font-size:clamp(1.7rem,4.6vw,3.4rem);line-height:1.25">
+        Of all life skills available to us, communication is probably the most&nbsp;powerful.
+      </p>
+      <footer class="reveal reveal-d2 mt-8 font-display tracking-[0.3em] uppercase text-taupe text-sm">— Bret Morrison</footer>
+    </blockquote>
+  </section>
+
+  <!-- ============ SCENE 6 — BROSCHÜRE / LEAD CAPTURE ============ -->
+  <section id="broschuere" class="scene grain flex items-center overflow-hidden"
+           style="background:linear-gradient(135deg,#A99C85 0%, #8d7f68 60%, #6f644e 100%);">
+    <span aria-hidden="true" class="pointer-events-none absolute -left-10 bottom-[-6vh] font-display font-extrabold text-ink/[0.06] leading-none select-none" style="font-size:clamp(14rem,34vw,40rem)">PDF</span>
+
+    <div class="mx-auto max-w-5xl px-6 sm:px-10 w-full grid lg:grid-cols-2 gap-12 items-center"
+         x-data="{sent:false, email:''}">
+
+      <div class="text-ink">
+        <p class="reveal font-display text-ink/60 text-sm tracking-[0.35em] uppercase mb-5">04 — Broschüre</p>
+        <h2 class="reveal reveal-d1 font-display font-extrabold tracking-tight leading-[1.02]" style="font-size:clamp(2.2rem,5vw,3.8rem)">
+          Die ganze Geschichte<br>als PDF.
+        </h2>
+        <p class="reveal reveal-d2 mt-6 text-ink/75 text-lg font-light max-w-md">
+          Alle Leistungen, Seminarthemen und mein Ansatz — kompakt zum Mitnehmen und Teilen.
+        </p>
+      </div>
+
+      <!-- inline lead-capture card -->
+      <div class="reveal reveal-d2">
+        <div class="relative rounded-[1.8rem] bg-ink/90 backdrop-blur border border-ink/30 p-7 sm:p-9 shadow-2xl">
+          <!-- störer corner -->
+          <span class="absolute -top-3 -right-3 rotate-6 rounded-full bg-sand text-ink font-display text-[11px] font-bold tracking-wide px-3 py-1 shadow">Kostenfrei</span>
+
+          <template x-if="!sent">
+            <form @submit.prevent="if(email.includes('@')){sent=true}" novalidate>
+              <label for="broschuere-mail" class="font-display font-semibold text-sand block mb-1">Broschüre herunterladen</label>
+              <p class="text-sand/55 text-sm mb-5 font-light">E-Mail eintragen — der Download-Link erscheint sofort.</p>
+
+              <div class="flex flex-col sm:flex-row gap-3">
+                <input id="broschuere-mail" type="email" required x-model="email"
+                       placeholder="ihre@email.de"
+                       class="flex-1 rounded-full bg-white/5 border border-taupe/30 px-5 py-3.5 text-sand placeholder-sand/35 outline-none focus:border-taupe transition" />
+                <button type="submit"
+                        class="rounded-full bg-taupe text-ink font-display font-semibold px-6 py-3.5 hover:bg-sand transition whitespace-nowrap">
+                  Jetzt holen →
+                </button>
+              </div>
+              <p class="mt-3 text-sand/35 text-[11px] font-display">Demo-Formular · es werden keine Daten gespeichert oder versendet.</p>
+            </form>
+          </template>
+
+          <template x-if="sent">
+            <div x-transition class="text-center py-2">
+              <div class="mx-auto mb-4 grid place-items-center w-14 h-14 rounded-full bg-taupe text-ink text-2xl">✓</div>
+              <p class="font-display font-semibold text-sand text-xl mb-1">Vielen Dank!</p>
+              <p class="text-sand/60 font-light text-sm mb-5">Ihre Broschüre liegt bereit.</p>
+              <a href="#" @click.prevent
+                 class="inline-flex items-center gap-2 rounded-full border border-taupe/50 text-sand font-display px-6 py-3 hover:bg-taupe hover:text-ink transition">
+                 Broschüre öffnen (PDF) <span aria-hidden="true">↗</span>
+              </a>
+              <p class="mt-4 text-sand/30 text-[11px] font-display">Demo — kein echtes PDF hinterlegt.</p>
+            </div>
+          </template>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SCENE 7 — KONTAKT + FOOTER/IMPRESSUM ============ -->
+  <section id="kontakt" class="scene scene--auto grain flex flex-col justify-between pt-28"
+           style="background:linear-gradient(180deg,#0d0c0b,#000);">
+
+    <div class="mx-auto max-w-5xl px-6 sm:px-10 w-full text-center flex-1 flex flex-col justify-center">
+      <p class="reveal font-display text-taupe text-sm tracking-[0.35em] uppercase mb-6">05 — Kontakt</p>
+      <h2 class="reveal reveal-d1 font-display font-extrabold text-sand tracking-tight leading-[1.02]" style="font-size:clamp(2.4rem,6.5vw,5rem)">
+        Ich freue mich auf ein<br><span class="text-taupe">persönliches Gespräch.</span>
+      </h2>
+
+      <div class="reveal reveal-d2 mt-10 flex flex-wrap items-center justify-center gap-4">
+        <a href="https://www.linkedin.com/in/simone-heigl-a58195203" target="_blank" rel="noopener"
+           class="inline-flex items-center gap-2 rounded-full bg-taupe text-ink font-display font-semibold px-7 py-3.5 hover:bg-sand transition">
+           Auf LinkedIn verbinden →
+        </a>
+        <a href="#broschuere" data-nav
+           class="inline-flex items-center gap-2 rounded-full border border-taupe/40 text-sand font-display px-7 py-3.5 hover:border-taupe hover:text-taupe transition">
+           Broschüre herunterladen
+        </a>
+      </div>
+
+      <div class="reveal reveal-d3 mt-10 flex items-center justify-center gap-7 font-display text-sand/65 text-sm">
+        <a href="https://instagram.com/simoneheigl.kommunikation" target="_blank" rel="noopener" class="hover:text-taupe transition">Instagram</a>
+        <span class="w-px h-4 bg-taupe/30"></span>
+        <a href="https://facebook.com/simoneheigl01" target="_blank" rel="noopener" class="hover:text-taupe transition">Facebook</a>
+        <span class="w-px h-4 bg-taupe/30"></span>
+        <a href="https://www.linkedin.com/in/simone-heigl-a58195203" target="_blank" rel="noopener" class="hover:text-taupe transition">LinkedIn</a>
+      </div>
+    </div>
+
+    <!-- FOOTER / IMPRESSUM -->
+    <footer class="border-t border-taupe/12 mt-16">
+      <div class="mx-auto max-w-6xl px-6 sm:px-10 py-12">
+        <div class="grid md:grid-cols-3 gap-10">
+          <div>
+            <div class="flex items-center gap-3 mb-4">
+              <span class="grid place-items-center w-10 h-10 rounded-full border border-taupe/50 font-display font-extrabold text-taupe text-sm">SH</span>
+              <span class="font-display font-medium text-sand">Simone Heigl</span>
+            </div>
+            <p class="text-sand/55 text-sm font-light">Trainerin, Beraterin &amp; Coach</p>
+            <p class="text-sand/35 text-sm font-light mt-3">Impressumsangaben folgen.</p>
+          </div>
+
+          <div>
+            <p class="font-display text-taupe text-xs tracking-[0.3em] uppercase mb-4">Social</p>
+            <ul class="space-y-2 text-sm text-sand/65 font-light">
+              <li><a href="https://instagram.com/simoneheigl.kommunikation" target="_blank" rel="noopener" class="hover:text-taupe transition">Instagram · simoneheigl.kommunikation</a></li>
+              <li><a href="https://facebook.com/simoneheigl01" target="_blank" rel="noopener" class="hover:text-taupe transition">Facebook · simoneheigl01</a></li>
+              <li><a href="https://www.linkedin.com/in/simone-heigl-a58195203" target="_blank" rel="noopener" class="hover:text-taupe transition">LinkedIn · simone-heigl-a58195203</a></li>
+            </ul>
+          </div>
+
+          <div>
+            <p class="font-display text-taupe text-xs tracking-[0.3em] uppercase mb-4">Entwürfe</p>
+            <ul class="grid grid-cols-2 gap-x-4 gap-y-1.5 text-sm font-light">
+              <li><a href="index.html" class="text-sand/65 hover:text-taupe transition">Übersicht</a></li>
+              <li><a href="design-alternative-1.html"  class="text-sand/65 hover:text-taupe transition">Design-Alternative-1</a></li>
+              <li><a href="design-alternative-2.html"  class="text-sand/65 hover:text-taupe transition">Design-Alternative-2</a></li>
+              <li><a href="design-alternative-3.html"  class="text-sand/65 hover:text-taupe transition">Design-Alternative-3</a></li>
+              <li><a href="design-alternative-4.html"  class="text-sand/65 hover:text-taupe transition">Design-Alternative-4</a></li>
+              <li><a href="design-alternative-5.html"  class="text-sand/65 hover:text-taupe transition">Design-Alternative-5</a></li>
+              <li><a href="design-alternative-6.html"  class="text-sand/65 hover:text-taupe transition">Design-Alternative-6</a></li>
+              <li><a href="design-alternative-7.html"  class="text-sand/65 hover:text-taupe transition">Design-Alternative-7</a></li>
+              <li><a href="design-alternative-8.html"  class="text-sand/65 hover:text-taupe transition">Design-Alternative-8</a></li>
+              <li><a href="design-alternative-9.html"  class="text-sand/65 hover:text-taupe transition">Design-Alternative-9</a></li>
+              <li><a href="design-alternative-10.html" aria-current="page" class="text-taupe font-medium">Design-Alternative-10</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="mt-12 pt-6 border-t border-taupe/10 flex flex-col sm:flex-row items-center justify-between gap-3 text-sand/35 text-xs font-display">
+          <p>© <span id="year"></span> Simone Heigl — Trainerin, Beraterin &amp; Coach</p>
+          <p>Entwurf #10 · „Immersive Storytelling“</p>
+        </div>
+      </div>
+    </footer>
+  </section>
+
+</main>
+
+<!-- ====================== KEYFRAMES (inline, JS-free) ====================== -->
+<style>
+  @keyframes floatBadge{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+  @keyframes cue{0%{transform:translateY(-100%)}50%{transform:translateY(0)}100%{transform:translateY(100%)}}
+</style>
+
+<script>
+  // year
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // ---- Custom cursor ----
+  (function(){
+    const dot = document.getElementById('cDot'), ring = document.getElementById('cRing');
+    let rx=0, ry=0, x=0, y=0;
+    const hoverables = 'a,button,input,[data-nav]';
+    addEventListener('mousemove', e=>{
+      x=e.clientX; y=e.clientY;
+      dot.style.left=x+'px'; dot.style.top=y+'px';
+    });
+    (function loop(){ rx+=(x-rx)*.18; ry+=(y-ry)*.18; ring.style.left=rx+'px'; ring.style.top=ry+'px'; requestAnimationFrame(loop); })();
+    document.addEventListener('mouseover', e=>{
+      if(e.target.closest(hoverables)){ ring.style.width='58px'; ring.style.height='58px'; dot.style.width='4px'; dot.style.height='4px'; }
+    });
+    document.addEventListener('mouseout', e=>{
+      if(e.target.closest(hoverables)){ ring.style.width='42px'; ring.style.height='42px'; dot.style.width='9px'; dot.style.height='9px'; }
+    });
+  })();
+
+  // ---- Reveal on scroll (observe within the scroll-snap stage) ----
+  (function(){
+    const stage = document.getElementById('stage');
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(en=>{ if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); } });
+    }, {root: stage, threshold:.18});
+    document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+  })();
+
+  // ---- Active scene -> progress rail + nav highlight ----
+  (function(){
+    const stage = document.getElementById('stage');
+    const ticks = [...document.querySelectorAll('[data-rail]')];
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(en=>{
+        if(en.isIntersecting){
+          const id = en.target.id;
+          ticks.forEach(t=> t.classList.toggle('active', t.dataset.rail===id));
+        }
+      });
+    }, {root: stage, threshold:.55});
+    document.querySelectorAll('.scene, .scene--auto').forEach(s=>io.observe(s));
+  })();
+
+  // ---- Smooth anchor scrolling inside the snap stage ----
+  (function(){
+    const stage = document.getElementById('stage');
+    document.querySelectorAll('[data-nav]').forEach(a=>{
+      a.addEventListener('click', e=>{
+        const id = a.getAttribute('href');
+        if(id && id.startsWith('#')){
+          const target = document.querySelector(id);
+          if(target){ e.preventDefault(); target.scrollIntoView({behavior:'smooth', block:'start'}); }
+        }
+      });
+    });
+  })();
+</script>
+</body>
+</html>
