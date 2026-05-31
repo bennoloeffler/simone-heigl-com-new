@@ -516,7 +516,11 @@
   const io = new IntersectionObserver((es)=>{
     es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
   },{threshold:.14});
-  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+  const observeReveals = ()=>document.querySelectorAll('.reveal:not(.in)').forEach(el=>io.observe(el));
+  observeReveals();
+  // Alpine x-for articles (Seminarthemen) are rendered after load — observe them too
+  document.addEventListener('alpine:initialized', ()=>{ observeReveals(); setTimeout(observeReveals, 60); });
+  setTimeout(observeReveals, 300);
 
   // custom cursor dot (desktop)
   const dot = document.getElementById('cursor-dot');

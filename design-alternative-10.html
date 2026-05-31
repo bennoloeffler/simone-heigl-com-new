@@ -7,6 +7,8 @@
 <meta name="description" content="Innere Stärke aufbauen. Ziele und Wünsche klären. Veränderung kompetent meistern. Simone Heigl — Trainerin, Beraterin & Coach." />
 
 <script src="https://cdn.tailwindcss.com"></script>
+<!-- Alpine plugins MUST load before Alpine core so x-collapse is known -->
+<script defer src="https://unpkg.com/@alpinejs/collapse@3.x.x/dist/cdn.min.js"></script>
 <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -173,13 +175,12 @@
              radial-gradient(80% 60% at 50% 0%, rgba(169,156,133,.20), transparent 60%),
              linear-gradient(180deg,#15130f 0%, #0d0c0b 55%, #100e0b 100%);">
 
-    <!-- zentriertes cineastisches Portrait: ganze Figur (kein Gesicht-Zoom), Seiten gehen in Schwarz ueber -->
+    <!-- cineastisches Portrait GANZ LINKS verankert; rechte Kante blendet ueber ~2cm sanft ins Schwarz -->
     <img src="assets/simone-duotone.jpg"
          alt="Simone Heigl — Trainerin, Beraterin und Coach"
-         class="absolute inset-y-0 left-1/2 -translate-x-1/2 h-full w-auto max-w-none object-cover object-top z-0" />
-    <!-- links/rechts in Schwarz ausblenden (cineastischer Ausschnitt) -->
-    <span aria-hidden="true" class="absolute inset-0 z-0 pointer-events-none"
-          style="background:linear-gradient(90deg,#0d0c0b 0%,rgba(13,12,11,.72) 12%,transparent 32%,transparent 68%,rgba(13,12,11,.72) 88%,#0d0c0b 100%);"></span>
+         class="absolute inset-y-0 left-0 h-full w-auto max-w-none object-cover object-top z-0"
+         style="-webkit-mask-image:linear-gradient(to right,#000 0,#000 calc(100% - 2cm),transparent 100%);
+                mask-image:linear-gradient(to right,#000 0,#000 calc(100% - 2cm),transparent 100%);" />
     <!-- gradient overlay for headline legibility -->
     <span aria-hidden="true" class="absolute inset-0 z-0 pointer-events-none"
           style="background:
@@ -582,7 +583,12 @@
     const io = new IntersectionObserver((entries)=>{
       entries.forEach(en=>{ if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); } });
     }, {root: stage, threshold:.18});
-    document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+    const observeAll = ()=> document.querySelectorAll('.reveal:not(.in)').forEach(el=>io.observe(el));
+    observeAll();
+    // Alpine builds the seminar rows (x-for) after initial scan -> re-observe them.
+    document.addEventListener('alpine:initialized', ()=> setTimeout(observeAll, 0));
+    // Safety net: if Alpine never fires for any reason, ensure dynamic rows still appear.
+    setTimeout(observeAll, 1200);
   })();
 
   // ---- Active scene -> progress rail + nav highlight ----

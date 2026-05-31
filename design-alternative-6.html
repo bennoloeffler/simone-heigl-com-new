@@ -601,6 +601,17 @@ function site(){
     init(){
       // hero word animation start
       requestAnimationFrame(()=> setTimeout(()=> this.heroReady = true, 120));
+      // reveal backstop: guarantees no .reveal stays stuck at opacity:0 even if
+      // x-intersect misses a fast scroll. Keeps the kinetic stagger.
+      const revealObs = new IntersectionObserver((entries)=>{
+        entries.forEach(en=>{ if(en.isIntersecting){ en.target.classList.add('shown'); revealObs.unobserve(en.target); } });
+      }, { rootMargin:'0px 0px -8% 0px', threshold:0 });
+      document.querySelectorAll('.reveal').forEach(el=> revealObs.observe(el));
+      // hard safety net: anything still hidden after 3s gets revealed
+      setTimeout(()=> document.querySelectorAll('.reveal:not(.shown)').forEach(el=>{
+        const r=el.getBoundingClientRect();
+        if(r.top < window.innerHeight*1.5) el.classList.add('shown');
+      }), 3000);
       // scroll listener: progress + nav state
       const onScroll = ()=>{
         const h = document.documentElement;
