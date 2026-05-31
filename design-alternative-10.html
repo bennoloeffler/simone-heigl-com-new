@@ -173,11 +173,13 @@
              radial-gradient(80% 60% at 50% 0%, rgba(169,156,133,.20), transparent 60%),
              linear-gradient(180deg,#15130f 0%, #0d0c0b 55%, #100e0b 100%);">
 
-    <!-- full-bleed cinematic portrait -->
+    <!-- zentriertes cineastisches Portrait: ganze Figur (kein Gesicht-Zoom), Seiten gehen in Schwarz ueber -->
     <img src="assets/simone-duotone.jpg"
          alt="Simone Heigl — Trainerin, Beraterin und Coach"
-         class="absolute inset-0 w-full h-full object-cover object-center z-0"
-         style="object-position:center 22%;" />
+         class="absolute inset-y-0 left-1/2 -translate-x-1/2 h-full w-auto max-w-none object-cover object-top z-0" />
+    <!-- links/rechts in Schwarz ausblenden (cineastischer Ausschnitt) -->
+    <span aria-hidden="true" class="absolute inset-0 z-0 pointer-events-none"
+          style="background:linear-gradient(90deg,#0d0c0b 0%,rgba(13,12,11,.72) 12%,transparent 32%,transparent 68%,rgba(13,12,11,.72) 88%,#0d0c0b 100%);"></span>
     <!-- gradient overlay for headline legibility -->
     <span aria-hidden="true" class="absolute inset-0 z-0 pointer-events-none"
           style="background:
